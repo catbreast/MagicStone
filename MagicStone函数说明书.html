@@ -1,0 +1,2173 @@
+<!DOCTYPE html><html><head><title>MagicStone函数说明书</title><meta charset='utf-8'><link href='https://dn-maxiang.qbox.me/res-min/themes/marxico.css' rel='stylesheet'><style>
+.note-content  {font-family: 'Helvetica Neue', Arial, 'Hiragino Sans GB', STHeiti, 'Microsoft YaHei', 'WenQuanYi Micro Hei', SimSun, Song, sans-serif;}
+body{background: white;}
+.left-div{
+	width:25%;
+	height:100%;
+	float:left;
+	position:fixed;
+	overflow-y:auto;
+	margin:-30px 0px 0px 10px;
+}
+.right-div{
+	width:75%;
+	float:right;
+	padding-left:40px;
+}
+.note-content .hljs-comment, .note-content 
+.hljs-quote {color: #7d7a68;}
+.note-content .hljs-variable, .note-content 
+.hljs-template-variable, .note-content 
+.hljs-attribute, .note-content 
+.hljs-tag, .note-content 
+.hljs-name, .note-content 
+.hljs-regexp, .note-content 
+.hljs-link, .note-content 
+.hljs-name, .note-content 
+.hljs-selector-id, .note-content 
+.hljs-selector-class {color: #d73737;}
+.note-content .hljs-number, .note-content 
+.hljs-meta, .note-content 
+.hljs-built_in, .note-content 
+.hljs-builtin-name, .note-content 
+.hljs-literal, .note-content 
+.hljs-type, .note-content 
+.hljs-params {color: #b65611;}
+.note-content .hljs-string, .note-content 
+.hljs-symbol, .note-content 
+.hljs-bullet {color: #60ac39;}
+.note-content .hljs-title, .note-content 
+.hljs-section {color: #6684e1;}
+.note-content .hljs-keyword, .note-content 
+.hljs-selector-tag {color: #b854d4;}
+.note-content .hljs {display: block; overflow-x: auto; background: #fefbec; color: #6e6b5e; padding: 0.5em;}
+.note-content .hljs-emphasis {font-style: italic;}
+.note-content .hljs-strong {font-weight: bold;}
+</style></head><body><div id='preview-contents' class='note-content'>
+                        
+                    
+<div class="left-div">
+
+
+<h2 id="magicstone函数说明书">MagicStone函数说明书</h2>
+
+<h4 id="函数目录">常见的数据类型</h4>
+
+<ul><li><a href="#spell">技能|物品格式</a></li>
+<li><a href="#unitId">目标格式</a></li>
+<li><a href="#官方函数">官方函数</a></li>
+</ul>
+
+<h4 id="函数目录-1">MagicStone函数说明</h4>
+
+<h5 id="函数目录-2">执行类函数</h5>
+
+<p>msR(spell, unit) <br>
+–<a href="#Run">施放技能或物品</a> <br>
+msAFK() <br>
+–<a href="#AFK">重置AFK计时器</a> <br>
+msSA(unit) <br>
+–<a href="#SA">面对指定目标</a> <br>
+msMT(unit) <br>
+–<a href="#MT">移动到指定目标或坐标</a> <br>
+msICM(name) <br>
+–<a href="#ICM">AOE技能正在执行时按下鼠标左键</a> <br>
+msMouse() <br>
+–<a href="#Mouse">点击鼠标左键</a> <br>
+msOvale(number) <br>
+–<a href="#Ovale">执行Ovale全职业输出助手</a> <br>
+msDecursive(Break) <br>
+–<a href="#Decursive">执行Decursive一键驱散插件</a></p>
+
+<h5 id="函数目录-3">变量类函数</h5>
+
+<p>msSV(VariableName,Value) <br>
+–<a href="#SV">设置变量</a> <br>
+msGV(VariableName) <br>
+–<a href="#GV">读取变量</a> <br>
+msIS(Spell,Unit,Stop,Time) <br>
+–<a href="#IS">技能插入</a> <br>
+msRS() <br>
+–<a href="#RS">执行插入的技能</a> <br>
+msINT() <br>
+–<a href="#INT">延时器</a></p>
+
+<h5 id="函数目录-4">判断类函数</h5>
+
+<p>msISC(spell, unit, Face, move) <br>
+–<a href="#ISC">技能或物品是否可以施放</a> <br>
+msGUB(buffs, unit, Caster, harmful) <br>
+–<a href="#GUB">判断目标是否有一个或多个buffs</a> <br>
+msIPC(number) <br>
+–<a href="#IPC">判断自己是否被控制</a> <br>
+msII(unit1,unit2) <br>
+–<a href="#II">判断目标是否在视野中</a> <br>
+msIUT(unit)2) <br>
+–<a href="#IUT">判断目标的目标是否自己</a> <br>
+msIF(unit1, unit2) <br>
+–<a href="#IF">判断目标是否在正面</a> <br>
+msIFB(unit1, unit2) <br>
+–<a href="#IFB">判断我是否在目标背面</a> <br>
+msIT(name) <br>
+–<a href="#IT">判断指定天赋是否启用</a> <br>
+msITN(name) <br>
+–<a href="#ITN">判断指定专精是否启用</a> <br>
+msIC(Class,Unit) <br>
+–<a href="#IC">判断目标是否指定职业</a> <br>
+msICS(unit, spells, interrupt) <br>
+–<a href="#ICS">判断目标正在读条</a> <br>
+msIAA() <br>
+–<a href="#IAA">判断玩家是否正在自动攻击</a> <br>
+msIB(unit) <br>
+–<a href="#IB">判断目标是否副本中的boss</a></p>
+
+<h5 id="函数目录-5">信息类函数</h5>
+
+<p>msTMW(groupN,iconN) <br>
+–<a href="#TMW">获取TellMeWhen插件指定图标是否显示</a> <br>
+msDBM(barname) <br>
+–<a href="#DBM">获取指定名称的DBM进度条的剩余时间</a> <br>
+msGHP(unit) <br>
+–<a href="#GHP">获取目标的生命值百分比</a> <br>
+msGPP(unit) <br>
+–<a href="#GPP">获取目标的能量值百分比</a> <br>
+msGPO() <br>
+–<a href="#GPO">获取特殊能量值</a> <br>
+msGUN(unit) <br>
+–<a href="#GUN">获取目标名称</a> <br>
+msGUG(unit) <br>
+–<a href="#GUG">获取目标Guid</a> <br>
+msGD(unit1, unit2) <br>
+–<a href="#GD">获取目标1与目标2之间的精确距离</a> <br>
+msGFD(unit)GFD(unit) <br>
+–<a href="#GFD">获取目标与自己的距离(适用与大型目标)</a> <br>
+msGUL(unit) <br>
+–<a href="#GUL">获取目标的坐标及朝向</a> <br>
+msGPBU(Distance,First,Second) <br>
+–<a href="#GPBU">获取目标 First 的 Distance 码的位置</a> <br>
+msGA(unit1, unit2) <br>
+–<a href="#GA">获取目标1面对目标2的方向</a> <br>
+msGBT(buff, unit, Caster, harmful) <br>
+–<a href="#GBT">获取目标指定buff的剩余时间</a> <br>
+msGBTM(buffs, unit, Caster, harmful) <br>
+–<a href="#GBTM">获取目标的buffs中的剩余时间最多的那个buff的剩余时间</a> <br>
+msGBC(buffs, unit, Caster, harmful) <br>
+–<a href="#GBC">获取目标指定buff的层数</a> <br>
+msGBS(buffTypes, unit, harmful) <br>
+–<a href="#GBS">获取目标指定buff类型的数量</a> <br>
+msGUBS(buffs, unit, harmful) <br>
+–<a href="#GUBS">获取目标拥有buffs的总数量</a> <br>
+msGCST(unit) <br>
+–<a href="#GCST">获取目标读条技能的剩余时间及经历时间</a> <br>
+msGSCT(sourceGUID,spellName) <br>
+–<a href="#GSCT">获取目标成功释放技能后经历的时间及该技能命中的目标</a> <br>
+msGLS() <br>
+–<a href="#GLS">获取自己上一个释放成功的技能名称</a> <br>
+msGC() <br>
+–<a href="#GC">获取玩家当前读条信息</a> <br>
+msGUH(unit) <br>
+–<a href="#GUH">获取目标的治疗量</a> <br>
+msGTT(index) <br>
+–<a href="#GTT">获取玩家的雕像、蘑菇、图腾的剩余时间</a> <br>
+msGCD(spell) <br>
+–<a href="#GCD">获取技能或物品的冷却时间</a> <br>
+msGSC(spell) <br>
+–<a href="#GSC">获取充能技能的可用数量及冷却时间</a> <br>
+msGSN(spell) <br>
+–<a href="#GSN">获取技能描述里的数字信息</a> <br>
+msGBB(buff, unit) <br>
+–<a href="#GBB">获取目标指定buff的描述</a> <br>
+msGBN(buff, unit) <br>
+–<a href="#GBN">获取buff描述里的数字信息</a> <br>
+msGUT(unit) <br>
+–<a href="#GUT">获取目标的目标</a> <br>
+msGBR(unit) <br>
+–<a href="#GBR">获取目标模型半径</a> <br>
+msGCR(unit) <br>
+–<a href="#GCR">获取目标可攻击范围</a> <br>
+msGRC() <br>
+–<a href="#GRC">获取正在冷却的符文最快的冷却时间</a> <br>
+msGRN() <br>
+–<a href="#GRN">获取可用的符文数量</a></p>
+
+<h5 id="函数目录-6">目标类函数</h5>
+
+<p>msGetUnits(isFriend,objType,distance,Central) <br>
+–<a href="#GetUnits">获取中心目标范围内的单位</a> <br>
+msGAOS(specID) <br>
+–<a href="#GAOS">获取JJC敌对相应专精的目标组</a> <br>
+msGetSort(group,FilterFunc,ValueFunc) <br>
+–<a href="#GetSort">在目标数组中根据过滤条件,对比大小进行排序并列出所有目标</a> <br>
+msGetMin(group,FilterFunc,ValueFunc) <br>
+–<a href="#GetMin">在目标数组中过滤条件,获取值最小的目标并返回该目标及值</a> <br>
+msGetMax(group,FilterFunc,ValueFunc) <br>
+–<a href="#GetMax">在目标数组中过滤条件,获取值最大的目标并返回该目标及值</a> <br>
+msFindUnit(group,FilterFunc) <br>
+–<a href="#FindUnit">在目标数组中寻找符合条件的目标（组）</a> <br>
+msFGC(scale,guidtable) <br>
+–<a href="#FGC">在目标数组中寻找最密集的目标</a></p>
+
+<hr>
+
+<hr>
+
+<hr>
+</div><div class="right-div">
+<h4 id="spell">技能|物品格式</h4>
+
+<p><strong>格式</strong></p>
+
+<blockquote>
+  <p>[SPELL|ITEM][名称|ID号]</p>
+</blockquote>
+
+<p><strong>说明</strong></p>
+
+<p>技能字符串用以代表某一个技能或某一件物品，由两部分组成： <br>
+<font color="Crimson" size="4">1.类型界定名（注意必须为大写）</font> <br>
+<code>SPELL</code> - 表示一个技能 。 <br>
+<code>ITEM</code>  -  表示一件物品。 <br>
+该项在第二项使用中文名称的情况下可省略，此时只是在出现技能和物品名称冲突的情况下，用以区分。</p>
+
+<p><font color="Crimson" size="4">2.技能或物品的名称或ID号</font> <br>
+可选择名称 或 数字ID来填写这一部分。 <br>
+(1)关于名称：名称为本地化名称（例如：次级治疗术）。 <br>
+(2)关于ID：技能和物品都有各自的唯一的ID号码，为1-99999之间的某个整数，如同物品或技能的“身份证”。 <br>
+将这个数字填写在此处，MS系统即可识别指定的技能或物品，并可规避因为多语言客户端带来的本地化麻烦。</p>
+
+<p><strong>举例</strong></p>
+
+<pre class="prettyprint hljs-dark"><code class="hljs 1c"><span class="hljs-string">"寒冰箭"</span><br><span class="hljs-string">"SPELL3234"</span><br><span class="hljs-string">"ITEM6948"</span><br></code></pre>
+
+<hr>
+
+<hr>
+
+<h4 id="unitId">目标格式</h4>
+
+<p>目标格式可以简单分为两类，一类是暴雪提供的框体目标，一类是由解锁器提供的对象标识符。</p>
+
+<p><strong>游戏自带框体</strong> <br>
+<code>"player"</code> - 当前玩家。 <br>
+<code>"target"</code> - 当前玩家的目标。 <br>
+<code>"focus"</code> - 当前玩家使用<code>/focus</code>命令所选择到的对象。 <br>
+<code>"pet"</code> - 当前玩家的宠物。 <br>
+<code>"mouseover"</code> - 当前玩家鼠标经过的对象。 <br>
+<code>"[玩家名字]"</code> - 这个玩家名字，不带服务器名称，而且该玩家必须队友。 <br>
+<code>"partyN"</code> - 当前玩家小队内第N个队友，N取值范围1-4。如<code>"party1"</code>、<code>"party2"</code>等。 <br>
+<code>"partypetN"</code> - 当前玩家小队内第N个队友的宠物，N取值范围1-4。 <br>
+<code>"raidN"</code> - 当前玩家团队内第N个队友，N取值范围1-40。 <br>
+<code>"raidpetN"</code> - 当前玩家团队内第N个队友的宠物，N取值范围1-40。 <br>
+<code>"arenaN"</code> - 竞技场中敌对队伍。N取值范围1-5。 <br>
+<code>"arenapetN"</code> - 竞技场中敌对队伍宠物。N取值范围1-5。 <br>
+<code>"bossN"</code> - 副本或场景中的BOSS，一般血条出现在界面右边。</p>
+
+<p><strong>解锁器提供</strong> <br>
+<code>"0xCF900000D7120000"</code> <br>
+由解锁器提供的游戏中所有对象的唯一标识符。</p>
+
+<hr>
+
+<hr>
+
+<h4 id="官方函数">官方函数</h4>
+
+<p>官方函数查询网站： <br>
+<a href="http://www.wowpedia.org/World_of_Warcraft_API" target="_blank">http://www.wowpedia.org/World_of_Warcraft_API</a> <br>
+<a href="http://wowprogramming.com/docs/api" target="_blank">http://wowprogramming.com/docs/api</a> <br>
+————————判断类——————————— <br>
+UnitExists(“unit”)–目标是否存在 <br>
+UnitIsVisible(“unit”)–目标与自己是否在同区域内 <br>
+UnitIsPlayer(unit)–目标是否玩家 <br>
+UnitCanAssist(“unit”, “otherUnit”) – 两个目标是否可以友善 <br>
+UnitCanAttack(“player”,”target”)–两个目标是否敌对 <br>
+UnitIsUnit(“player”,”targettarget”)–两个目标是否相同 <br>
+UnitAffectingCombat(“player”)–目标是否在战斗状态 <br>
+UnitPlayerControlled(“unit”)–目标是否玩家控制 <br>
+UnitIsDeadOrGhost(unit)–目标是否死亡或灵魂状态 <br>
+IsStealthed()–玩家是否潜行状态 <br>
+IsMounted()–玩家是否在坐骑上 <br>
+InActiveBattlefield()–玩家在JJC或战场中 <br>
+IsActiveBattlefieldArena()–玩家是否在JJC中 <br>
+IsInLFGDungeon()–玩家是否在副本中 <br>
+IsInGroup()–玩家是否在队伍里面 <br>
+IsHarmfulSpell(“name”)–法术是否可以用来对付敌方单位 <br>
+IsHelpfulSpell(“name”)–法术是否可以作用于友方单位 <br>
+IsEquippedItem(“itemName”)–是否装备某wup <br>
+————————信息类——————————— <br>
+UnitMana(Unit)–目标当前法力值 <br>
+UnitHealth(Unit)–目标当前生命值 <br>
+UnitPowerType(UnitId)–获取指定目标的能量类型 <br>
+UnitClass(“unit”)–目标的职业 <br>
+GetUnitName(“target”)–目标的名称 <br>
+GetUnitSpeed(“player”)–目标的移动速度 <br>
+UnitCreatureFamily(unit)–返回宠物的类型。猎人的宠物,术士的恶魔类型 <br>
+UnitSpellHaste(“unit”) or UnitSpellHaste(“name”)–急速百分比 <br>
+inInstance, instanceType = IsInInstance()–是否在副本中 <br>
+instanceType： </p>
+
+<ul><li>“none” 不在副本中</li>
+<li>“pvp” 战场</li>
+<li>“arena” 竞技场</li>
+<li>“party” 5人副本</li>
+<li>“raid” 团队副本</li>
+<li>“scenario” 情景 <br>
+<hr></li>
+</ul>
+
+<hr>
+
+<h4 id="Run">msR(spell, unit)</h4>
+
+<p>对目标施放技能或物品</p>
+
+
+
+<pre class="prettyprint hljs-dark"><code class="hljs stylus"><span class="hljs-function"><span class="hljs-title">msR</span><span class="hljs-params">(spell, unit)</span></span><br><span class="hljs-function"><span class="hljs-title">msRun</span><span class="hljs-params">(spell, unit)</span></span><br></code></pre>
+
+<p><strong>参数</strong></p>
+
+<p><font color="Crimson" size="4">spell</font> <br>
+string - 技能 or 物品 or 宏。 <br>
+当spell为AOE技能时，则直接在unit脚下释放。 <br>
+支持本地文字名称，如果要用技能或物品数字ID，需要在数字ID前加上前续。 <br>
+<code>"ITEM+物品ID"、"SPELL+技能ID"</code>       <code>"致死打击"、"ITEM1234"、"SPELL56789"、"/startattack"</code></p>
+
+<p><font color="Crimson" size="4">unit</font> <br>
+string - 目标。Table - 坐标。nil - 无需目标 or 目标暂时未知。</p>
+
+<p><strong>举例</strong> <br>
+1.如果断筋能对当前目标用,并且目标在正面：</p>
+
+<pre class="prettyprint hljs-dark"><code class="hljs ada"><span class="hljs-keyword">if</span> msISC(<span class="hljs-string">"断筋"</span>,<span class="hljs-string">"target"</span>,<span class="hljs-literal">true</span>) <span class="hljs-keyword">then</span><br>    msRun(<span class="hljs-string">"断筋"</span>,<span class="hljs-string">"target"</span>);<br><span class="hljs-keyword">end</span><br></code></pre>
+
+<p>2.如果 SPELL2050可给当前目标用，就用SPELL2050。</p>
+
+
+
+<pre class="prettyprint hljs-dark"><code class="hljs ada"><span class="hljs-keyword">if</span> msISC(<span class="hljs-string">"SPELL2050"</span>,<span class="hljs-string">"target"</span>) <span class="hljs-keyword">then</span><br>    msRun(<span class="hljs-string">"SPELL2050"</span>,<span class="hljs-string">"target"</span>);<br><span class="hljs-keyword">end</span><br></code></pre>
+
+<hr>
+
+<hr>
+
+<h4 id="ISC"> msISC(spell, unit, Face, move)</h4>
+
+<p>技能或物品是否可以施放</p>
+
+
+
+<pre class="prettyprint hljs-dark"><code class="hljs arduino"><span class="hljs-keyword">bool</span>, reason = msISC(spell, unit, Face, <span class="hljs-built_in">move</span>)<br></code></pre>
+
+<blockquote>
+  <p>默认判断条件： <br>
+  spell是否存在(已经学会的技能或背包上存在该物品) <br>
+  冷却是否结束 <br>
+  目标是否存在(当target填写的时候才判断) <br>
+  目标是否在技能范围内(当target填写的时候才判断) <br>
+  目标是否在正面(需要添加该判断可以通过Face进行设置) <br>
+  是否移动读条(对于可以移动读条的技能可以通过move来忽略移动判断) <br>
+  <strong>并不会判断卡视野或其他功能，需要判断的请在条件中添加对应函数。</strong></p>
+</blockquote>
+
+<p><strong>参数</strong></p>
+
+<p><font color="Crimson" size="4">spell</font> <br>
+string - 技能 or 物品 or 宏，支持本地文字名称。* <code>"致死打击"、"ITEM1234"、"SPELL56789"、"/startattack"</code> <br>
+如果要用技能或物品数字ID,需要在数字ID前加上前续。”ITEM+物品ID”、”SPELL+技能ID”。</p>
+
+<p><font color="Crimson" size="4">unit</font> <br>
+string - 目标。Table - 坐标。nil - 无需目标 or 目标暂时未知。</p>
+
+<p><font color="Crimson" size="4">Face</font> <br>
+bool - 是否判断目标在玩家正面。true  - 目标在玩家正面。nil - 忽略判断。</p>
+
+<p><font color="Crimson" size="4">move</font> <br>
+bool - 是否需要忽略移动读条判断。true - 该技能可以移动判断。</p>
+
+<p><strong>返回</strong></p>
+
+<p><font color="Crimson" size="4">bool</font> <br>
+bool - 指定技能或物品是否可以施放。</p>
+
+<p><font color="Crimson" size="4">reason</font> <br>
+string - 不可施放的原因。</p>
+
+<p><strong>举例</strong> <br>
+1.如果SPELL2050能用就用SPELL2050：</p>
+
+<pre class="prettyprint hljs-dark"><code class="hljs ada"><span class="hljs-keyword">if</span> msISC(<span class="hljs-string">"SPELL2050"</span>) <span class="hljs-keyword">then</span><br>    msRun(<span class="hljs-string">"SPELL2050"</span>);<br><span class="hljs-keyword">end</span><br></code></pre>
+
+<p>2.如果”致死打击”可给当前目标用,并且需要添加判断是否面对该目标:</p>
+
+
+
+<pre class="prettyprint hljs-dark"><code class="hljs ada"><span class="hljs-keyword">if</span> msISC(<span class="hljs-string">"致死打击"</span>,<span class="hljs-string">"target"</span>,<span class="hljs-literal">true</span>) <span class="hljs-keyword">then</span><br>    msRun(<span class="hljs-string">"致死打击"</span>,<span class="hljs-string">"target"</span>);<br><span class="hljs-keyword">end</span><br></code></pre>
+
+<p>3.如果”火球术”可给当前目标用，并且忽略移动判断，对当前目标使用眼镜蛇射击。</p>
+
+
+
+<pre class="prettyprint hljs-dark"><code class="hljs ada"><span class="hljs-keyword">if</span> msISC(<span class="hljs-string">"火球术"</span>,<span class="hljs-string">"target"</span>,<span class="hljs-literal">true</span>,<span class="hljs-literal">true</span>) <span class="hljs-keyword">then</span><br>    msRun(<span class="hljs-string">"火球术 "</span>,<span class="hljs-string">"target"</span>);<br><span class="hljs-keyword">end</span><br></code></pre>
+
+<hr>
+
+<hr>
+
+<h4 id="IPC">msIPC(number)</h4>
+
+<p>自己是否被控制</p>
+
+
+
+<pre class="prettyprint hljs-dark"><code class="hljs ini"><span class="hljs-attr">bool</span> = msIPC(number)<br></code></pre>
+
+<p><strong>参数</strong></p>
+
+<p><font color="Crimson" size="4">number</font> <br>
+number - 被控制的数字类型。默认: 5  昏迷。</p>
+
+<p><strong>返回</strong></p>
+
+<p><font color="Crimson" size="4">bool</font> <br>
+bool - 自己是否被控制。</p>
+
+<p><strong>举例</strong> <br>
+1.如果自己被晕，则用人类种族技能”自利”：</p>
+
+<pre class="prettyprint hljs-dark"><code class="hljs ada"><span class="hljs-keyword">if</span> msIPC() <span class="hljs-keyword">and</span> msISC(<span class="hljs-string">"自利"</span>) <span class="hljs-keyword">then</span><br>    msRun(<span class="hljs-string">"自利"</span>);<br><span class="hljs-keyword">end</span><br></code></pre>
+
+<hr>
+
+<hr>
+
+<h4 id="II"> msII(unit1,unit2)</h4>
+
+<p>目标是否在视野中</p>
+
+
+
+<pre class="prettyprint hljs-dark"><code class="hljs cpp"><span class="hljs-keyword">bool</span>, reason = msII(unit1,unit2)<br></code></pre>
+
+<p><strong>参数</strong></p>
+
+<p><font color="Crimson" size="4">unit1</font> <br>
+string - 被考察的目标。 默认: “target”</p>
+
+<p><font color="Crimson" size="4">unit2</font> <br>
+string - 考察的目标。默认: “player”</p>
+
+<p><strong>返回</strong></p>
+
+<p><font color="Crimson" size="4">bool</font> <br>
+bool - 是否在视野中(不被卡视角)。</p>
+
+<p><strong>举例</strong> <br>
+1.如果当前目标在玩家的视野中，则对其施放“真言术:韧”：</p>
+
+<pre class="prettyprint hljs-dark"><code class="hljs ada"><span class="hljs-keyword">if</span> msII(<span class="hljs-string">"target"</span>) <span class="hljs-keyword">and</span> msISC(<span class="hljs-string">"真言术:韧"</span> ,<span class="hljs-string">"target"</span>) <span class="hljs-keyword">then</span><br>    msRun(<span class="hljs-string">"真言术:韧"</span> ,<span class="hljs-string">"target"</span>);<br><span class="hljs-keyword">end</span><br></code></pre>
+
+<hr>
+
+<hr>
+
+<h4 id="IUT">msIUT(unit)</h4>
+
+<p>目标的目标是否自己</p>
+
+
+
+<pre class="prettyprint hljs-dark"><code class="hljs ini"><span class="hljs-attr">bool</span> = msIUT(unit)<br></code></pre>
+
+<p><strong>参数</strong></p>
+
+<p><font color="Crimson" size="4">unit</font> <br>
+string - 需要判断的目标</p>
+
+<p><strong>返回</strong></p>
+
+<p><font color="Crimson" size="4">bool</font> <br>
+bool - 目标的目标是否自己</p>
+
+<hr>
+
+<hr>
+
+<h4 id="IF">msIF(unit1, unit2)</h4>
+
+<p>目标是否在正面</p>
+
+<pre class="prettyprint hljs-dark"><code class="hljs ini"><span class="hljs-attr">bool</span> = msIF(unit1,unit2)<br></code></pre>
+
+<p><strong>参数</strong></p>
+
+<p><font color="Crimson" size="4">unit1</font> <br>
+string - 被考察的目标。默认: “target”</p>
+
+<p><font color="Crimson" size="4">unit2</font> <br>
+string - 考察的目标。默认: “player”</p>
+
+<p><strong>返回</strong></p>
+
+<p><font color="Crimson" size="4">bool</font> <br>
+bool - 是否面向。</p>
+
+<p><strong>举例</strong> <br>
+1.如果当前玩家面对着当前目标，则执行宏”/startattack”：</p>
+
+<pre class="prettyprint hljs-dark"><code class="hljs ada"><span class="hljs-keyword">if</span> msIF(<span class="hljs-string">"target"</span>) <span class="hljs-keyword">then</span><br>    msRun(<span class="hljs-string">"/startattack"</span>);<br><span class="hljs-keyword">end</span><br></code></pre>
+
+<hr>
+
+<hr>
+
+<h4 id="IFB"> msIFB(unit1, unit2)</h4>
+
+<p>目标unit2是否在目标unit1背面</p>
+
+
+
+<pre class="prettyprint hljs-dark"><code class="hljs ini"><span class="hljs-attr">bool</span> = msIFB(unit1,unit2)<br></code></pre>
+
+<p><strong>参数</strong></p>
+
+<p><font color="Crimson" size="4">unit1</font> <br>
+string - 被考察的目标。默认: “target”</p>
+
+<p><font color="Crimson" size="4">unit2</font> <br>
+string - 考察的目标。默认: “player”</p>
+
+<p><strong>返回</strong></p>
+
+<p><font color="Crimson" size="4">bool</font> <br>
+bool - 我是否在目标背面。</p>
+
+<p><strong>举例</strong> <br>
+1.如果玩家正面向当前目标的背后，则施放”伏击”：</p>
+
+<pre class="prettyprint hljs-dark"><code class="hljs ada"><span class="hljs-keyword">if</span> msIFB(<span class="hljs-string">"target"</span>) <span class="hljs-keyword">and</span> msISC(<span class="hljs-string">"伏击"</span> ,<span class="hljs-string">"target"</span>) <span class="hljs-keyword">then</span><br>    msRun(<span class="hljs-string">"伏击"</span> ,<span class="hljs-string">"target"</span>);<br><span class="hljs-keyword">end</span><br></code></pre>
+
+<hr>
+
+<hr>
+
+<h4 id="IT">msIT(name)</h4>
+
+<p>是否启用指定天赋</p>
+
+
+
+<pre class="prettyprint hljs-dark"><code class="hljs ini"><span class="hljs-attr">bool</span> = msIT(Name)<br></code></pre>
+
+<p><strong>参数</strong></p>
+
+<p><font color="Crimson" size="4">Name</font> <br>
+string - 天赋名称或ID。</p>
+
+<p><strong>返回</strong></p>
+
+<p><font color="Crimson" size="4">bool</font> <br>
+bool - 是否启用了指定天赋。</p>
+
+<hr>
+
+<hr>
+
+<h4 id="ITN">msITN(name)</h4>
+
+<p>是否启用指定专精</p>
+
+<pre class="prettyprint hljs-dark"><code class="hljs ini"><span class="hljs-attr">bool</span> = msITN(Name)<br></code></pre>
+
+<p><strong>参数</strong></p>
+
+<p><font color="Crimson" size="4">Name</font> <br>
+string - 中文专精名称。</p>
+
+<p><strong>返回</strong></p>
+
+<p><font color="Crimson" size="4">bool</font> <br>
+bool - 是否启用了指定专精。</p>
+
+<hr>
+
+<hr>
+
+<h4 id="ICM">msICM(Spell)</h4>
+
+<p>AOE技能正在执行时按下鼠标左键</p>
+
+<pre class="prettyprint hljs-dark"><code class="hljs ini"><span class="hljs-attr">bool</span> = msICM(Spell)<br></code></pre>
+
+<p><strong>参数</strong></p>
+
+<p><font color="Crimson" size="4">Spell</font> <br>
+string - AOE技能名称</p>
+
+<p><strong>返回</strong></p>
+
+<p><font color="Crimson" size="4">bool</font> <br>
+bool - 执行成功或失败。</p>
+
+<hr>
+
+<hr>
+
+<h4 id="IC">msIC(Class,Unit)(Spell)</h4>
+
+<p>目标是否指定职业</p>
+
+<pre class="prettyprint hljs-dark"><code class="hljs delphi">bool = msIC(<span class="hljs-keyword">Class</span>,<span class="hljs-keyword">Unit</span>)<br></code></pre>
+
+<p><strong>参数</strong></p>
+
+<p><font color="Crimson" size="4">Class</font> <br>
+string - 职业的中文名称,可以一个或多个。<code>"潜行者"、"法师, 术士"</code></p>
+
+<p><font color="Crimson" size="4">Unit</font> <br>
+string - 被考察的目标。默认: “target”</p>
+
+<p><strong>返回值</strong></p>
+
+<p><font color="Crimson" size="4">bool</font> <br>
+bool - 目标是否指定职业</p>
+
+<hr>
+
+<hr>
+
+<h4 id="ICS">msICS(unit, spells, interrupt)</h4>
+
+<p>目标是否正在读条,并返回读条信息</p>
+
+<pre class="prettyprint hljs-dark"><code class="hljs ocaml"><span class="hljs-built_in">bool</span>, spellType, spellName, spellDuration, spellRemaining, starttime = msICS(<span class="hljs-built_in">unit</span>,spells,interruptable)<br></code></pre>
+
+<p><strong>参数</strong></p>
+
+<p><font color="Crimson" size="4">unit</font> <br>
+string - 判断施法的目标。默认：”target”</p>
+
+<p><font color="Crimson" size="4">spells</font> <br>
+string or number - 需要判断的一个或多个读条技能的名称，名称之间用”,”分隔。默认: “*” 任何法术</p>
+
+<p><font color="Crimson" size="4">interruptable</font> <br>
+bool - 判断技能是否可被打断，true为可打断，false为不可打断，nil为忽略。</p>
+
+<p><strong>返回值</strong></p>
+
+<p><font color="Crimson" size="4">bool</font> <br>
+bool - 是否正在读条。</p>
+
+<p><font color="Crimson" size="4">spellType</font> <br>
+number - 读条技能的类型，1为正向读条，2为反向读条。</p>
+
+<p><font color="Crimson" size="4">spellName</font> <br>
+string - 读条技能的名称。</p>
+
+<p><font color="Crimson" size="4">spellDuration</font> <br>
+number - 读条总时间。</p>
+
+<p><font color="Crimson" size="4">spellRemaining</font> <br>
+number - 读条剩余时间。</p>
+
+<p><font color="Crimson" size="4">starttime</font> <br>
+number - 读条经历的时间</p>
+
+<p><strong>举例</strong></p>
+
+<ol start="1"><li rel="1">isCasting变量保存当前目标是否正在施放“次级治疗术”或“炉石”。</li>
+</ol>
+
+<pre class="prettyprint hljs-dark"><code class="hljs ebnf"><span class="hljs-attribute">local isCasting</span> = msICS(<span class="hljs-string">"target"</span>,<span class="hljs-string">"治疗术,炉石"</span>);<br></code></pre>
+
+<ol start="2"><li rel="2">isCasting变量保存当前目标是否正在施放任何可被打断的读条技能。</li>
+</ol>
+
+
+
+<pre class="prettyprint hljs-dark"><code class="hljs applescript"><span class="hljs-keyword">local</span> isCasting = msICS(<span class="hljs-string">"target"</span>,<span class="hljs-string">"*"</span>,<span class="hljs-literal">true</span>);<br></code></pre>
+
+<hr>
+
+<hr>
+
+<h4 id="IAA">msIAA()</h4>
+
+<p>判断玩家是否正在自动攻击</p>
+
+
+
+<pre class="prettyprint hljs-dark"><code class="hljs ini"><span class="hljs-attr">bool</span> = msIAA()<br></code></pre>
+
+<p><strong>返回值</strong></p>
+
+<p><font color="Crimson" size="4">bool</font> <br>
+bool - 玩家自己是否正在自动攻击。</p>
+
+<hr>
+
+<hr>
+
+<h4 id="AFK">msAFK()</h4>
+
+<p>重置AFK计时器</p>
+
+<pre class="prettyprint hljs-dark"><code class="hljs stylus"><span class="hljs-function"><span class="hljs-title">msAFK</span><span class="hljs-params">()</span></span><br></code></pre>
+
+<hr>
+
+<hr>
+
+<h4 id="SA">msSA(unit)</h4>
+
+<p>面对指定目标</p>
+
+<pre class="prettyprint hljs-dark"><code class="hljs stylus"><span class="hljs-function"><span class="hljs-title">msSA</span><span class="hljs-params">(unit)</span></span><br></code></pre>
+
+<p><strong>参数</strong></p>
+
+<p><font color="Crimson" size="4">unit</font> <br>
+string - 目标。</p>
+
+<hr>
+
+<h4 id="MT">msMT(unit)</h4>
+
+<p>移动到指定目标或坐标</p>
+
+<pre class="prettyprint hljs-dark"><code class="hljs stylus"><span class="hljs-function"><span class="hljs-title">msMT</span><span class="hljs-params">(unit)</span></span><br></code></pre>
+
+<p><strong>参数</strong></p>
+
+<p><font color="Crimson" size="4">unit</font> <br>
+string or table - 目标或坐标表。</p>
+
+<hr>
+
+<hr>
+
+<h4 id="Mouse">msMouse()</h4>
+
+<p>点击鼠标左键</p>
+
+<pre class="prettyprint hljs-dark"><code class="hljs stylus"><span class="hljs-function"><span class="hljs-title">msMouse</span><span class="hljs-params">()</span></span><br></code></pre>
+
+<p><strong>举例</strong> <br>
+1.判断”英勇飞跃”技能被点亮,则点击鼠标左键</p>
+
+<pre class="prettyprint hljs-dark"><code class="hljs ada"><span class="hljs-keyword">if</span> IsCurrentSpell(<span class="hljs-string">"英勇飞跃"</span>) <span class="hljs-keyword">then</span><br>    msMouse()<br><span class="hljs-keyword">end</span><br></code></pre>
+
+<hr>
+
+<hr>
+
+<h4 id="Ovale">msOvale(number) </h4>
+
+<p>执行Ovale全职业输出助手插件</p>
+
+
+
+<pre class="prettyprint hljs-dark"><code class="hljs stylus"><span class="hljs-function"><span class="hljs-title">msOvale</span><span class="hljs-params">(number)</span></span><br></code></pre>
+
+<blockquote>
+  <p>需要安装Ovale插件</p>
+</blockquote>
+
+<p><strong>参数</strong></p>
+
+<p><font color="Crimson" size="4">number</font> <br>
+number - 填写数字,用第几个图标的技能</p>
+
+<hr>
+
+<hr>
+
+<h4 id="Decursive">msDecursive(Break)</h4>
+
+<p>执行Decursive一键驱散插件</p>
+
+<pre class="prettyprint hljs-dark"><code class="hljs stylus"><span class="hljs-function"><span class="hljs-title">msDecursive</span><span class="hljs-params">(Break)</span></span><br></code></pre>
+
+<blockquote>
+  <p>需要安装Decursive插件</p>
+</blockquote>
+
+<p><strong>参数</strong></p>
+
+<p><font color="Crimson" size="4">Break</font> <br>
+bool - 填true则打断当前读条进行驱散,否则不打断当前读条.</p>
+
+<hr>
+
+<hr>
+
+<h4 id="TMW">msTMW(groupN,iconN)</h4>
+
+<p>获取TellMeWhen插件指定图标的信息</p>
+
+<pre class="prettyprint hljs-dark"><code class="hljs stylus">shown, unit, spell, stack, <span class="hljs-selector-tag">time</span> = msTMW(groupN,iconN)<br></code></pre>
+
+<p><strong>参数</strong></p>
+
+<p><font color="Crimson" size="4">groupN</font> <br>
+number - 组数。</p>
+
+<p><font color="Crimson" size="4">iconN</font> <br>
+number - 个数。</p>
+
+<p><strong>返回值</strong></p>
+
+<p><font color="Crimson" size="4">shown</font> <br>
+bool - 是否显示。（图标满足显示条件,并且透明度设置&gt;0）</p>
+
+<p><font color="Crimson" size="4">unit</font> <br>
+string - 目标。（图标显示时，满足条件的目标）</p>
+
+<p><font color="Crimson" size="4">spell</font> <br>
+string - 法术。（图标显示时的技能）</p>
+
+<p><font color="Crimson" size="4">stack</font> <br>
+number - 层数。（检测递减时，返回递减率）</p>
+
+<p><font color="Crimson" size="4">time</font> <br>
+number - 剩余时间。</p>
+
+<p><strong>举例</strong> <br>
+1.TMW中第一组第二个图标显示的话,就用人类种族技能自利.</p>
+
+<pre class="prettyprint hljs-dark"><code class="hljs ada"><span class="hljs-keyword">if</span> msTMW(<span class="hljs-number">1</span>,<span class="hljs-number">2</span>) <span class="hljs-keyword">and</span> msISC(<span class="hljs-string">"自利"</span>) <span class="hljs-keyword">then</span><br>     msRun(<span class="hljs-string">"自利"</span>)<br><span class="hljs-keyword">end</span><br></code></pre>
+
+<hr>
+
+<hr>
+
+<h4 id="DBM">msDBM(barname)</h4>
+
+<p>获取指定名称的DBM进度条的剩余时间</p>
+
+
+
+<pre class="prettyprint hljs-dark"><code class="hljs ini"><span class="hljs-attr">time</span> = MS.msDBM(barname)<br><span class="hljs-attr">time</span> = msDBM(barname)<br></code></pre>
+
+<p><strong>参数</strong></p>
+
+<p><font color="Crimson" size="4">barname</font> <br>
+string - DMB进度条的名称(可以填写模糊简短名称)</p>
+
+<p><strong>返回</strong></p>
+
+<p><font color="Crimson" size="4">time</font> <br>
+number - 剩余时间</p>
+
+<hr>
+
+<hr>
+
+<h4 id="GetUnits">msGetUnits(isFriend,objType,distance,Central)</h4>
+
+<p>获取中心目标范围内的单位</p>
+
+
+
+<pre class="prettyprint hljs-dark"><code class="hljs gams"><span class="hljs-keyword">Table</span> = msGetUnits(isFriend, objType, distance, Central)<br></code></pre>
+
+<p><strong>参数</strong></p>
+
+<p><font color="Crimson" size="4">isFriend</font> <br>
+bool - 是否与中心目标友善 <br>
+<code>nil</code> - 默认所有目标 <br>
+<code>true</code> - 可以被中心目标Central治疗 <br>
+<code>false</code> - 可以被中心目标Central攻击</p>
+
+<p><font color="Crimson" size="4">objType</font> <br>
+bool - 是否玩家 <br>
+<code>true</code> - 玩家(包括玩家的宠物) <br>
+<code>false</code> - 非玩家 <br>
+<code>nil</code> - 默认所有目标</p>
+
+<p><font color="Crimson" size="4">distance</font> <br>
+number - 与中心目标Central的距离。 默认屏幕内能看见的。</p>
+
+<p><font color="Crimson" size="4">Central</font> <br>
+string - 中心目标。 默认自己:”player”。注意与参数isFriend的关系。</p>
+
+<p><strong>返回</strong></p>
+
+<p><font color="Crimson" size="4">Table</font> <br>
+table - 搜索到的所有单位的GUID数组表。</p>
+
+<p><strong>举例</strong> <br>
+1.寻找玩家自身周围15码内敌对NPC目标,并把他们全部打印出来：</p>
+
+<pre class="prettyprint hljs-dark"><code class="hljs lua"><span class="hljs-keyword">local</span> npcs = msGetUnits(<span class="hljs-literal">false</span>,<span class="hljs-literal">false</span>,<span class="hljs-number">15</span>,<span class="hljs-string">"player"</span>);<br><span class="hljs-keyword">for</span> i=<span class="hljs-number">1</span>,#npcs <span class="hljs-keyword">do</span><br> <span class="hljs-built_in">print</span>(<span class="hljs-string">"目标单位名字:"</span>,GetUnitName(npcs[i]));<br><span class="hljs-keyword">end</span><br></code></pre>
+
+<p>2.如果玩家自身周围8码内敌对玩家目标大于等于2个,并可以使用旋风斩,则用旋风斩：</p>
+
+
+
+<pre class="prettyprint hljs-dark"><code class="hljs lua"><span class="hljs-keyword">local</span> npcs = msGetUnits(<span class="hljs-literal">false</span>,<span class="hljs-literal">true</span>,<span class="hljs-number">8</span>,<span class="hljs-string">"player"</span>);<br><span class="hljs-keyword">if</span> #npcs&gt;=<span class="hljs-number">2</span> <span class="hljs-keyword">and</span> msISC(<span class="hljs-string">"旋风斩"</span>) <span class="hljs-keyword">then</span><br>   msRun(<span class="hljs-string">"旋风斩"</span>)<br><span class="hljs-keyword">end</span><br></code></pre>
+
+<hr>
+
+<hr>
+
+<h4 id="GetSort">msGetSort(group,FilterFunc,ValueFunc)</h4>
+
+<p>在目标group数组中根据过滤条件 FilterFunc,对比 ValueFunc 值大小进行排序并列出目标</p>
+
+
+
+<pre class="prettyprint hljs-dark"><code class="hljs gcode">u<span class="hljs-symbol">npack1</span>, u<span class="hljs-symbol">npack2</span>, u<span class="hljs-symbol">npack3</span>, ... = msGetSort<span class="hljs-comment">(group,FilterFunc,ValueFunc)</span><br></code></pre>
+
+<p><strong>参数</strong></p>
+
+<p><font color="Crimson" size="4">group</font> <br>
+table or string - 目标群/表,默认小队/团队。默认：nil - 团队或队伍的成员 <br>
+确定搜索的目标范围,可以填写下面的字符串,针对性范围： <br>
+<code>"party"</code>小队 <br>
+<code>"partypet"</code>小队宠物 <br>
+<code>"raid"</code>团队 <br>
+<code>"raidpet"</code>团队宠物 <br>
+<code>"arena"</code>竞技场敌对队伍 <br>
+<code>"arenapet"</code>竞技场敌对宠物</p>
+
+<p><font color="Crimson" size="4">FilterFunc</font> <br>
+function - 条件函数func <br>
+举例 <br>
+1.可以被我攻击的 <br>
+<code>function(unit) return UnitCanAttack("player",unit) end</code></p>
+
+<p><font color="Crimson" size="4">ValueFunc</font> <br>
+function - 对比函数func <br>
+举例 <br>
+1.对比距离我最小的 <br>
+<code>function(a,b) return msGD(a) &lt; msGD(b) end</code> <br>
+2.对比血量最大的目标 <br>
+<code>function(a,b) return msGHP(a) &gt; msGHP(b) end</code></p>
+
+<p><strong>返回</strong></p>
+
+<p><font color="Crimson" size="4">unpack</font> <br>
+string - 满足条件FilterFunc后通过比较ValueFunc值得出的目标全部列出。</p>
+
+<p><strong>举例</strong> <br>
+1.找出参数1条件为(身边可以攻击的),参数2为(距离我最近)的所有目标并排列:</p>
+
+<pre class="prettyprint hljs-dark"><code class="hljs lua"><span class="hljs-keyword">local</span> ObjectTypes = msGetUnits(<span class="hljs-literal">false</span>,<span class="hljs-literal">nil</span>);<br><span class="hljs-keyword">local</span> UnitA,UnitB = msGetSort(ObjectTypes,<br>    <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(unit)</span></span><br>        <span class="hljs-keyword">return</span> UnitCanAttack(unit,<span class="hljs-string">"player"</span>)<br>    <span class="hljs-keyword">end</span>,<br>    <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(a,b)</span></span><br>        <span class="hljs-keyword">return</span> msGD(a) &lt; msGD(b)<br>    <span class="hljs-keyword">end</span>)<br></code></pre>
+
+<p>2.找到身边40码内友善的玩家,他们中从小到大排序，并依次对他们使用技能:</p>
+
+
+
+<pre class="prettyprint hljs-dark"><code class="hljs lua"><span class="hljs-comment">--获取友善的玩家</span><br><span class="hljs-keyword">local</span> ObjectTypes = msGetUnits(<span class="hljs-literal">true</span>,<span class="hljs-literal">true</span>)<br><span class="hljs-keyword">local</span> Unit1,Unit2,Unit3 = msGetSort(ObjectTypes,<br>    <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(unit)</span></span> <span class="hljs-keyword">return</span> msGD(unit)&lt;<span class="hljs-number">40</span> <span class="hljs-keyword">end</span>,<br>    <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(a,b)</span></span> <span class="hljs-keyword">return</span> msGHP(a) &lt; msGHP(b) <span class="hljs-keyword">end</span>)<br><span class="hljs-comment">--血量最少的目标</span><br><span class="hljs-keyword">if</span> Unit1 <span class="hljs-keyword">and</span> msISC(<span class="hljs-string">"道标一"</span>,Unit1) <span class="hljs-keyword">then</span><br>    msR(<span class="hljs-string">"道标一"</span>,Unit1)<br><span class="hljs-keyword">end</span><br><span class="hljs-comment">--血量最少倒数第二个的目标</span><br><span class="hljs-keyword">if</span> Unit2 <span class="hljs-keyword">and</span> msISC(<span class="hljs-string">"道标二"</span>,Unit2) <span class="hljs-keyword">then</span><br>    msR(<span class="hljs-string">"道标二"</span>,Unit2)<br><span class="hljs-keyword">end</span><br><span class="hljs-comment">--血量最少倒数第三个的目标</span><br><span class="hljs-keyword">if</span> Unit3 <span class="hljs-keyword">and</span> msISC(<span class="hljs-string">"圣光闪现"</span>,Unit3) <span class="hljs-keyword">then</span><br>    msR(<span class="hljs-string">"圣光闪现"</span>,Unit3)<br><span class="hljs-keyword">end</span><br></code></pre>
+
+<hr>
+
+<hr>
+
+<h4 id="GetMin">msGetMin(group,FilterFunc,ValueFunc)</h4>
+
+<p>在目标group数组中过滤条件FilterFunc,获取ValueFunc值最小的目标并返回ValueFunc值</p>
+
+
+
+<pre class="prettyprint hljs-dark"><code class="hljs pf">Minimum, Minvalue = msGetM<span class="hljs-keyword">in</span>(<span class="hljs-keyword">group</span>,FilterFunc,ValueFunc)<br></code></pre>
+
+<p><strong>参数</strong></p>
+
+<p><font color="Crimson" size="4">group</font> <br>
+table or string - 目标群/表,默认小队/团队。默认：nil - 团队或队伍的成员 <br>
+确定搜索的目标范围,可以填写下面的字符串,针对性范围： <br>
+<code>"party"</code>小队 <br>
+<code>"partypet"</code>小队宠物 <br>
+<code>"raid"</code>团队 <br>
+<code>"raidpet"</code>团队宠物 <br>
+<code>"arena"</code>竞技场敌对队伍 <br>
+<code>"arenapet"</code>竞技场敌对宠物</p>
+
+<p><font color="Crimson" size="4">FilterFunc</font> <br>
+function - 条件函数func <br>
+举例 <br>
+1.可以被我攻击的 <br>
+<code>function(unit) return UnitCanAttack("player",unit) end</code></p>
+
+<p><font color="Crimson" size="4">ValueFunc</font> <br>
+function - 对比函数func <br>
+举例 <br>
+1.对比距离我最近的 <br>
+<code>function(unit) return msGD(unit) end</code> <br>
+2.对比血量最小的 <br>
+<code>function(unit) return msGHP(unit) end</code></p>
+
+<p><strong>返回</strong></p>
+
+<p><font color="Crimson" size="4">Minimum</font> <br>
+string - 满足条件FilterFunc后ValueFunc值最小的目标。</p>
+
+<p><font color="Crimson" size="4">Minvalue</font> <br>
+number - 最小值目标的ValueFunc值。</p>
+
+<p><strong>举例</strong></p>
+
+<ol start="1"><li rel="1">在ObjectTypes中找出条件为(可以攻击的),(距离)我最小的目标,并对他使用致死打击。</li>
+</ol>
+
+<pre class="prettyprint hljs-dark"><code class="hljs lua"><span class="hljs-keyword">local</span> ObjectTypes = msGetUnits(<span class="hljs-literal">nil</span>,<span class="hljs-literal">nil</span>)<br><span class="hljs-keyword">local</span> Unit = msGetMin(ObjectTypes,<br>    <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(unit)</span></span><br>        <span class="hljs-keyword">return</span> UnitCanAttack(<span class="hljs-string">"player"</span>,unit)<br>    <span class="hljs-keyword">end</span>,<br>    <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(unit)</span></span><br>        <span class="hljs-keyword">return</span> msGD(unit)<br>    <span class="hljs-keyword">end</span>)<br><span class="hljs-keyword">if</span> Unit <span class="hljs-keyword">and</span> msISC(<span class="hljs-string">"致死打击"</span>,Unit) <span class="hljs-keyword">then</span><br>    msRun(<span class="hljs-string">"致死打击"</span>,Unit)<br><span class="hljs-keyword">end</span><br></code></pre>
+
+<ol start="2"><li rel="2">找到身边40码内并且在我视野范围友善的玩家,他们中血量最小的那个，并对他使用治疗术</li>
+</ol>
+
+
+
+<pre class="prettyprint hljs-dark"><code class="hljs lua"><span class="hljs-comment">--获取友善的玩家</span><br><span class="hljs-keyword">local</span> ObjectTypes = msGetUnits(<span class="hljs-literal">true</span>,<span class="hljs-literal">true</span>)<br><span class="hljs-keyword">local</span> Unit = msGetMin(ObjectTypes,<br>    <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(unit)</span></span> <span class="hljs-keyword">return</span> msGFD(unit)&lt;=<span class="hljs-number">40</span> <span class="hljs-keyword">and</span> msII(unit) <span class="hljs-keyword">end</span>,<br>    <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(unit)</span></span> <span class="hljs-keyword">return</span> msGHP(unit) <span class="hljs-keyword">end</span>)<br><span class="hljs-keyword">if</span> Unit <span class="hljs-keyword">and</span> msISC(<span class="hljs-string">"治疗术"</span>,Unit) <span class="hljs-keyword">then</span><br> msRun(<span class="hljs-string">"治疗术"</span>,Unit)<br><span class="hljs-keyword">end</span><br></code></pre>
+
+<hr>
+
+<hr>
+
+<h4 id="GetMax">msGetMax(group,FilterFunc,ValueFunc)</h4>
+
+<p>在目标group数组中过滤条件FilterFunc,获取ValueFunc值最大的目标并返回ValueFunc值</p>
+
+
+
+<pre class="prettyprint hljs-dark"><code class="hljs protobuf">Maxmum, Maxvalue = msGetMax(<span class="hljs-keyword">group</span>,FilterFunc,ValueFunc)<br></code></pre>
+
+<p><strong>参数</strong></p>
+
+<p><font color="Crimson" size="4">group</font> <br>
+table or string - 目标群/表,默认小队/团队。默认：nil - 团队或队伍的成员 <br>
+确定搜索的目标范围,可以填写下面的字符串,针对性范围： <br>
+<code>"party"</code>小队 <br>
+<code>"partypet"</code>小队宠物 <br>
+<code>"raid"</code>团队 <br>
+<code>"raidpet"</code>团队宠物 <br>
+<code>"arena"</code>竞技场敌对队伍 <br>
+<code>"arenapet"</code>竞技场敌对宠物</p>
+
+<p><font color="Crimson" size="4">FilterFunc</font> <br>
+function - 条件函数func <br>
+举例 <br>
+1.可以被我攻击的 <br>
+<code>function(unit) return UnitCanAttack("player",unit) end</code></p>
+
+<p><font color="Crimson" size="4">ValueFunc</font> <br>
+function - 对比函数func <br>
+举例 <br>
+1.对比距离我最远的 <br>
+<code>function(unit) return msGD(unit) end</code> <br>
+2.对比血量最大的 <br>
+<code>function(unit) return msGHP(unit) end</code></p>
+
+<p><strong>返回</strong></p>
+
+<p><font color="Crimson" size="4">Maxmum</font> <br>
+string - 满足条件FilterFunc后ValueFunc值最大的目标。</p>
+
+<p><font color="Crimson" size="4">Maxvalue</font> <br>
+number - 最大值目标的ValueFunc值。</p>
+
+<p><strong>举例</strong> <br>
+1.在ObjectTypes中找出条件为(可以攻击的),(距离)我最远的目标,并对他使用致死打击。</p>
+
+<pre class="prettyprint hljs-dark"><code class="hljs lua"><span class="hljs-keyword">local</span> ObjectTypes = msGetUnits(<span class="hljs-literal">nil</span>,<span class="hljs-literal">nil</span>)<br><span class="hljs-keyword">local</span> Unit = msGetMax(ObjectTypes,<br>    <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(unit)</span></span><br>        <span class="hljs-keyword">return</span> UnitCanAttack(<span class="hljs-string">"player"</span>,unit)<br>    <span class="hljs-keyword">end</span>,<br>    <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(unit)</span></span><br>        <span class="hljs-keyword">return</span> msGD(unit)<br>    <span class="hljs-keyword">end</span>)<br><span class="hljs-keyword">if</span> Unit <span class="hljs-keyword">and</span> msISC(<span class="hljs-string">"致死打击"</span>,Unit) <span class="hljs-keyword">then</span><br>    msRun(<span class="hljs-string">"致死打击"</span>,Unit)<br><span class="hljs-keyword">end</span><br></code></pre>
+
+<p>2.找到身边40码内并且在我视野范围友善的玩家,他们中血量最大的那个，并对他使用治疗术</p>
+
+
+
+<pre class="prettyprint hljs-dark"><code class="hljs lua"><span class="hljs-keyword">local</span> ObjectTypes = msGetUnits(<span class="hljs-literal">true</span>,<span class="hljs-literal">true</span>)<span class="hljs-comment">--获取友善的玩家</span><br><span class="hljs-keyword">local</span> Unit = msGetMax(ObjectTypes,<br>    <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(unit)</span></span> <span class="hljs-keyword">return</span> msGFD(unit)&lt;=<span class="hljs-number">40</span> <span class="hljs-keyword">and</span> msII(unit) <span class="hljs-keyword">end</span>,<br>    <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(unit)</span></span> <span class="hljs-keyword">return</span> msGHP(unit) <span class="hljs-keyword">end</span>)<br><span class="hljs-keyword">if</span> Unit <span class="hljs-keyword">and</span> msISC(<span class="hljs-string">"治疗术"</span>,Unit) <span class="hljs-keyword">then</span><br> msRun(<span class="hljs-string">"治疗术"</span>,Unit)<br><span class="hljs-keyword">end</span><br></code></pre>
+
+<hr>
+
+<hr>
+
+<h4 id="FindUnit">msFindUnit(group,FilterFunc)</h4>
+
+<p>在目标group数组中寻找符合条件 FilterFunc 的目标（组）</p>
+
+
+
+<pre class="prettyprint hljs-dark"><code class="hljs protobuf">FindUnit, FindUnitTable = msFindUnit(<span class="hljs-keyword">group</span>,FilterFunc)<br></code></pre>
+
+<p><strong>参数</strong></p>
+
+<p><font color="Crimson" size="4">group</font> <br>
+table or string - 目标群/表,默认小队/团队。默认：nil - 团队或队伍的成员 <br>
+确定搜索的目标范围,可以填写下面的字符串,针对性范围： <br>
+<code>"party"</code>小队 <br>
+<code>"partypet"</code>小队宠物 <br>
+<code>"raid"</code>团队 <br>
+<code>"raidpet"</code>团队宠物 <br>
+<code>"arena"</code>竞技场敌对队伍 <br>
+<code>"arenapet"</code>竞技场敌对宠物</p>
+
+<p><font color="Crimson" size="4">FilterFunc</font> <br>
+function - 条件函数func <br>
+举例 <br>
+1.可以被我攻击的 <br>
+<code>function(unit) return UnitCanAttack("player",unit) end</code></p>
+
+<p><strong>返回</strong></p>
+
+<p><font color="Crimson" size="4">FindUnit</font> <br>
+string - 满足条件FilterFunc的目标。</p>
+
+<p><font color="Crimson" size="4">FindUnitTable</font> <br>
+table - 满足条件FilterFunc的群组。</p>
+
+<p><strong>举例</strong> <br>
+1.获取身边的非玩家敌对目标,再对他们进行UnitCanAttack过滤。</p>
+
+<pre class="prettyprint hljs-dark"><code class="hljs lua"><span class="hljs-keyword">local</span> ObjectTypes = msGetUnits(<span class="hljs-literal">false</span>,<span class="hljs-literal">false</span>)<br><span class="hljs-keyword">local</span> AA = msFindUnit(ObjectTypes,<br>    <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(unit)</span></span><br>        <span class="hljs-keyword">return</span> UnitCanAttack(unit,<span class="hljs-string">"player"</span>)<br>    <span class="hljs-keyword">end</span>)<br></code></pre>
+
+<p>2.获取身边的非玩家敌对目标,再对他们进行UnitCanAttack过滤,得出他们的总数量有多少。</p>
+
+
+
+<pre class="prettyprint hljs-dark"><code class="hljs lua"><span class="hljs-keyword">local</span> ObjectTypes = msGetUnits(<span class="hljs-literal">false</span>,<span class="hljs-literal">false</span>)<br><span class="hljs-keyword">local</span> AA, BB = msFindUnit(ObjectTypes,<br>    <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(unit)</span></span><br>        <span class="hljs-keyword">return</span> UnitCanAttack(unit,<span class="hljs-string">"player"</span>)<br>    <span class="hljs-keyword">end</span>)<br><span class="hljs-keyword">if</span> AA <span class="hljs-keyword">then</span><br>    <span class="hljs-built_in">print</span>(#BB)<br><span class="hljs-keyword">end</span><br></code></pre>
+
+<hr>
+
+<hr>
+
+<h4 id="FGC">msFGC(scale,guidtable)</h4>
+
+<p>在目标数组中寻找最密集的目标 </p>
+
+
+
+<pre class="prettyprint hljs-dark"><code class="hljs ini"><span class="hljs-attr">result</span> = msFGC(scale,guidtable)<br></code></pre>
+
+<p><strong>参数</strong></p>
+
+<p><font color="Crimson" size="4">scale</font> <br>
+number - 目标群的最大半径码数。默认10码</p>
+
+<p><font color="Crimson" size="4">guidtable</font> <br>
+table - 目标群</p>
+
+<p><strong>返回</strong></p>
+
+<p><font color="Crimson" size="4">result</font> <br>
+string - 中心目标。</p>
+
+<p><strong>举例</strong> <br>
+1.找出30码内目标群最大半径15码的敌对中心目标生物，对他用月火术。</p>
+
+<pre class="prettyprint hljs-dark"><code class="hljs applescript"><span class="hljs-keyword">local</span> <span class="hljs-literal">result</span> = msGetUnits(<span class="hljs-literal">false</span>,<span class="hljs-literal">false</span>,<span class="hljs-number">30</span>,<span class="hljs-string">"player"</span>)<br><span class="hljs-keyword">local</span> unit1 = msFGC(<span class="hljs-number">15</span>,<span class="hljs-literal">result</span>)<br><span class="hljs-keyword">if</span> unit1 <span class="hljs-keyword">and</span> msISC(<span class="hljs-string">"月火术"</span>,unit1) <span class="hljs-keyword">then</span><br>    msRun(<span class="hljs-string">"月火术"</span>,unit1)<br><span class="hljs-keyword">end</span><br></code></pre>
+
+<hr>
+
+<hr>
+
+<h4 id="GHP">msGHP(unit)</h4>
+
+<p>获取目标的生命值百分比</p>
+
+
+
+<pre class="prettyprint hljs-dark"><code class="hljs ini"><span class="hljs-attr">result</span> = msGHP(unit)<br></code></pre>
+
+<p><strong>参数</strong></p>
+
+<p><font color="Crimson" size="4">unit</font> <br>
+string - 被考察的目标。默认:自己</p>
+
+<p><strong>返回</strong></p>
+
+<p><font color="Crimson" size="4">result</font> <br>
+number - 生命值百分数（0~100）</p>
+
+<p><strong>举例</strong> <br>
+1.如果焦点的生命值少于20%，就对其施放冰枪术。</p>
+
+<pre class="prettyprint hljs-dark"><code class="hljs ada"><span class="hljs-keyword">if</span> msGHP(<span class="hljs-string">"focus"</span>)&lt;<span class="hljs-number">20</span> <span class="hljs-keyword">and</span> msISC(<span class="hljs-string">"冰枪术 "</span>,<span class="hljs-string">"focus"</span>) <span class="hljs-keyword">then</span><br>    msRun(<span class="hljs-string">"冰枪术 "</span>,<span class="hljs-string">"focus"</span>)<br><span class="hljs-keyword">end</span><br></code></pre>
+
+<hr>
+
+<hr>
+
+<h4 id="GPP">msGPP(unit)</h4>
+
+<p>获取目标的能量值百分比</p>
+
+
+
+<pre class="prettyprint hljs-dark"><code class="hljs ini"><span class="hljs-attr">result</span> = msGPP(unit)<br></code></pre>
+
+<p><strong>参数</strong></p>
+
+<p><font color="Crimson" size="4">unit</font> <br>
+string - 被考察的目标。默认:自己</p>
+
+<p><strong>返回</strong></p>
+
+<p><font color="Crimson" size="4">result</font> <br>
+number - 能量值百分数（0~100）</p>
+
+<p><strong>举例</strong> <br>
+1.如果玩家自己的能量值少于20%，则对自己施放激活。</p>
+
+<pre class="prettyprint hljs-dark"><code class="hljs ada"><span class="hljs-keyword">if</span> msGPP(<span class="hljs-string">"player"</span>)&lt;<span class="hljs-number">20</span> <span class="hljs-keyword">and</span> msISC(<span class="hljs-string">"激活 "</span>,<span class="hljs-string">"player"</span>) <span class="hljs-keyword">then</span><br>    msRun(<span class="hljs-string">"激活 "</span>,<span class="hljs-string">"player"</span>)<br><span class="hljs-keyword">end</span><br></code></pre>
+
+<hr>
+
+<hr>
+
+<h4 id="GUN">msGUN(unit)</h4>
+
+<p>获取目标名称</p>
+
+
+
+<pre class="prettyprint hljs-dark"><code class="hljs ini"><span class="hljs-attr">result</span> = msGUN(unit)<br></code></pre>
+
+<p><strong>参数</strong></p>
+
+<p><font color="Crimson" size="4">unit</font> <br>
+string - 被考察的目标。默认:当前目标</p>
+
+<p><strong>返回</strong></p>
+
+<p><font color="Crimson" size="4">result</font> <br>
+string - 名称。</p>
+
+<hr>
+
+<hr>
+
+<h4 id="GUG">msGUG(unit)</h4>
+
+<p>获取目标Guid</p>
+
+<pre class="prettyprint hljs-dark"><code class="hljs ini"><span class="hljs-attr">result</span> = msGUG(unit)<br></code></pre>
+
+<p><strong>参数</strong></p>
+
+<p><font color="Crimson" size="4">unit</font> <br>
+string - 被考察的目标。可以是GUID，如: <code>Creature-0-1133-870-141-71953-0000432FBD</code></p>
+
+<p><strong>返回</strong></p>
+
+<p><font color="Crimson" size="4">result</font> <br>
+string - 返回目标的指针(可以直接对其使用各种函数)，如: <code>0xCF900000D7120000</code></p>
+
+<hr>
+
+<hr>
+
+<h4 id="GD">msGD(unit1, unit2)</h4>
+
+<p>获取目标1与目标2之间的精确距离</p>
+
+<pre class="prettyprint hljs-dark"><code class="hljs ini"><span class="hljs-attr">Range</span> = msGD(unit1, unit2)<br></code></pre>
+
+<p><strong>参数</strong></p>
+
+<p><font color="Crimson" size="4">unit1</font> <br>
+string - 被考察的目标。默认: “target”</p>
+
+<p><font color="Crimson" size="4">unit2</font> <br>
+string - 考察的目标。默认: “player”</p>
+
+<p><strong>返回</strong></p>
+
+<p><font color="Crimson" size="4">Range</font> <br>
+number - 距离的码数。失败返回:999</p>
+
+<p><strong>举例</strong> <br>
+1.如果当前目标在玩家的10码范围内则用破胆怒吼：</p>
+
+<pre class="prettyprint hljs-dark"><code class="hljs ada"><span class="hljs-keyword">if</span> msGD()&lt;=<span class="hljs-number">10</span> <span class="hljs-keyword">and</span> msISC(<span class="hljs-string">"破胆怒吼"</span>) <span class="hljs-keyword">then</span><br>    msRun(<span class="hljs-string">"破胆怒吼"</span>);<br><span class="hljs-keyword">end</span><br></code></pre>
+
+<hr>
+
+<hr>
+
+<h4 id="GFD">msGFD(unit)</h4>
+
+<p>获取指定目标与自己的距离(适用与大型目标)</p>
+
+
+
+<pre class="prettyprint hljs-dark"><code class="hljs fortran"><span class="hljs-built_in">Range</span> = msGFD(<span class="hljs-keyword">unit</span>)<br></code></pre>
+
+<p><strong>参数</strong></p>
+
+<p><font color="Crimson" size="4">unit</font> <br>
+string - 被考察的目标。默认: “target”</p>
+
+<p><strong>返回</strong></p>
+
+<p><font color="Crimson" size="4">Range</font> <br>
+number - 自动根据技能距离进行获取码数。适用于与大型目标的距离判断。</p>
+
+<p><strong>举例</strong> <br>
+1.如果当前目标在玩家的8码范围内则用破胆怒吼：</p>
+
+<pre class="prettyprint hljs-dark"><code class="hljs ada"><span class="hljs-keyword">if</span> msGFD()&lt;=<span class="hljs-number">8</span> <span class="hljs-keyword">and</span> msISC(<span class="hljs-string">"破胆怒吼"</span>) <span class="hljs-keyword">then</span><br>    msRun(<span class="hljs-string">"破胆怒吼"</span>);<br><span class="hljs-keyword">end</span><br></code></pre>
+
+<hr>
+
+<hr>
+
+<h4 id="GUL">msGUL(unit)</h4>
+
+<p>获取目标的坐标及朝向</p>
+
+
+
+<pre class="prettyprint hljs-dark"><code class="hljs fortran"><span class="hljs-built_in">Range</span> = msGUL(<span class="hljs-keyword">unit</span>)<br></code></pre>
+
+<p><strong>参数</strong></p>
+
+<p><font color="Crimson" size="4">unit</font> <br>
+string - 被考察的目标。默认: “target”</p>
+
+<p><strong>返回</strong></p>
+
+<p><font color="Crimson" size="4">X,Y,Z,R</font> <br>
+number - 目标的坐标方位信息表。</p>
+
+<p><strong>举例</strong> <br>
+1.打印自己的坐标及朝向：</p>
+
+<pre class="prettyprint hljs-dark"><code class="hljs lisp">print(<span class="hljs-name">msGUL</span>(<span class="hljs-string">"player"</span>))<br></code></pre>
+
+<hr>
+
+<hr>
+
+<h4 id="GA">msGA(unit1, unit2)</h4>
+
+<p>获取目标2面对目标1的方向</p>
+
+
+
+<pre class="prettyprint hljs-dark"><code class="hljs ini"><span class="hljs-attr">Range</span> = msGA(unit1, unit2)<br></code></pre>
+
+<p><strong>参数</strong></p>
+
+<p><font color="Crimson" size="4">unit1</font> <br>
+string - 被考察的目标。默认: “target”</p>
+
+<p><font color="Crimson" size="4">unit2</font> <br>
+string - 考察的目标。默认: “player”</p>
+
+<p><strong>返回</strong></p>
+
+<p><font color="Crimson" size="4">Range</font> <br>
+number - 朝向值。</p>
+
+<hr>
+
+<hr>
+
+<h4 id="GUB">msGUB(buffs,unit,Caster,harmful)</h4>
+
+<p>判断目标是否有一个或多个buffs</p>
+
+<pre class="prettyprint hljs-dark"><code class="hljs armasm"><span class="hljs-keyword">bool </span>= msGUB(<span class="hljs-keyword">buffs, </span>unit, <span class="hljs-keyword">buffCaster, </span>harmful)<br></code></pre>
+
+<p><strong>参数</strong></p>
+
+<p><font color="Crimson" size="4">Buffs</font> <br>
+string - 需要判断的buff或debuff，可以是一个或多个文字或数字的组合。 <br>
+ 如：<code>"回春术" "123" "战斗怒吼,456" "7894,6548"</code></p>
+
+<p><font color="Crimson" size="4">unit</font> <br>
+string - 判断拥有buffs的目标。默认: “player”</p>
+
+<p><font color="Crimson" size="4">buffCaster</font> <br>
+string - Buff的释放者。如: <code>"target","player"</code>。默认:nil  无限定</p>
+
+<p><font color="Crimson" size="4">harmful</font> <br>
+bool - 是否为有害Buff。</p>
+
+<ul><li>nil - 无限定</li>
+<li>true - 有害</li>
+<li>false - 有益</li>
+</ul>
+
+<p><strong>返回</strong></p>
+
+<p><font color="Crimson" size="4">bool</font> <br>
+bool - 是否有buffs的其中一个。</p>
+
+<p><strong>举例</strong> <br>
+1.判断自己身上是否有野性印记或回春术或1127其中一个。</p>
+
+<pre class="prettyprint hljs-dark"><code class="hljs ada"><span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> msGUB(<span class="hljs-string">"野性印记,回春术,1127"</span>) <span class="hljs-keyword">and</span> msISC(<span class="hljs-string">"野性印记"</span>,<span class="hljs-string">"player"</span>) <span class="hljs-keyword">then</span><br>    msRun(<span class="hljs-string">"野性印记"</span>,<span class="hljs-string">"player"</span>)<br><span class="hljs-keyword">end</span><br></code></pre>
+
+<p>2.判断当前目标身上是否有自己施放的痛苦诅咒debuff。</p>
+
+
+
+<pre class="prettyprint hljs-dark"><code class="hljs actionscript">msGUB(<span class="hljs-string">"痛苦诅咒"</span>,<span class="hljs-string">"target"</span>,<span class="hljs-string">"player"</span>,<span class="hljs-literal">true</span>);<br></code></pre>
+
+<hr>
+
+<hr>
+
+<h4 id="GBT">msGBT(buff, unit, Caster, harmful)</h4>
+
+<p>获取目标指定buff的剩余时间</p>
+
+
+
+<pre class="prettyprint hljs-dark"><code class="hljs armasm"><span class="hljs-symbol">time</span> = msGBT(<span class="hljs-keyword">buff, </span>unit, <span class="hljs-keyword">buffCaster, </span>harmful)<br></code></pre>
+
+<p><strong>参数</strong></p>
+
+<p><font color="Crimson" size="4">Buff</font> <br>
+string - 需要判断的buff或debuff。 <br>
+如：<code>"回春术" "123"</code></p>
+
+<p><font color="Crimson" size="4">unit</font> <br>
+string - 判断拥有buffs的目标。默认: “player”</p>
+
+<p><font color="Crimson" size="4">buffCaster</font> <br>
+string - Buff的释放者。如: <code>"target","player"</code>。默认:nil  无限定</p>
+
+<p><font color="Crimson" size="4">harmful</font> <br>
+bool - 是否为有害Buff。</p>
+
+<ul><li>nil - 无限定</li>
+<li>true - 有害</li>
+<li>false - 有益</li>
+</ul>
+
+<p><strong>返回</strong></p>
+
+<p><font color="Crimson" size="4">time</font> <br>
+number - Buff或debuff的剩余时间，单位：秒。</p>
+
+<p><strong>举例</strong> <br>
+1.获取自己身上野性印记的剩余时间。</p>
+
+<pre class="prettyprint hljs-dark"><code class="hljs stylus"><span class="hljs-function"><span class="hljs-title">msGBT</span><span class="hljs-params">(<span class="hljs-string">"野性印记"</span>)</span></span><br></code></pre>
+
+<p>2.获取当前目标身上是自己施放的痛苦诅咒剩余时间。</p>
+
+
+
+<pre class="prettyprint hljs-dark"><code class="hljs stylus"><span class="hljs-function"><span class="hljs-title">msGBT</span><span class="hljs-params">(<span class="hljs-string">"痛苦诅咒"</span>,<span class="hljs-string">"target"</span>,<span class="hljs-string">"player"</span>,true)</span></span><br></code></pre>
+
+<hr>
+
+<hr>
+
+<h4 id="GBTM">msGBTM(buffs, unit, Caster, harmful)</h4>
+
+<p>获取目标指定buff中的剩余时间最多的那个buff的剩余时间</p>
+
+
+
+<pre class="prettyprint hljs-dark"><code class="hljs armasm"><span class="hljs-symbol">time</span> = msGBTM(<span class="hljs-keyword">buffs, </span>unit, <span class="hljs-keyword">buffCaster, </span>harmful)<br></code></pre>
+
+<p><strong>参数</strong></p>
+
+<p><font color="Crimson" size="4">Buffs</font> <br>
+string - 需要判断的buff或debuff，可以是一个或多个文字或数字的组合。 <br>
+如：<code>"回春术" "123" "战斗怒吼,456" "7894,6548"</code></p>
+
+<p><font color="Crimson" size="4">unit</font> <br>
+string - 判断拥有buffs的目标。默认: “player”</p>
+
+<p><font color="Crimson" size="4">buffCaster</font> <br>
+string - Buff的释放者。如: <code>"target","player"</code>。默认:nil  无限定</p>
+
+<p><font color="Crimson" size="4">harmful</font> <br>
+bool - 是否为有害Buff。</p>
+
+<ul><li>nil - 无限定</li>
+<li>true - 有害</li>
+<li>false - 有益</li>
+</ul>
+
+<p><strong>返回</strong></p>
+
+<p><font color="Crimson" size="4">time</font> <br>
+number - Buff或debuff的剩余时间，单位：秒。</p>
+
+<p><strong>举例</strong> <br>
+1.获取自己身上野性印记或123的剩余时间中最多的那个。</p>
+
+<pre class="prettyprint hljs-dark"><code class="hljs stylus"><span class="hljs-function"><span class="hljs-title">msGBTM</span><span class="hljs-params">(<span class="hljs-string">"野性印记,123"</span>)</span></span><br></code></pre>
+
+<p>2.获取当前目标身上是自己施放的痛苦诅咒剩余时间。</p>
+
+
+
+<pre class="prettyprint hljs-dark"><code class="hljs stylus"><span class="hljs-function"><span class="hljs-title">msGBTM</span><span class="hljs-params">(<span class="hljs-string">"痛苦诅咒"</span>,<span class="hljs-string">"target"</span>,<span class="hljs-string">"player"</span>,true)</span></span><br></code></pre>
+
+<hr>
+
+<hr>
+
+<h4 id="GBC">msGBC(buffs, unit, Caster, harmful)</h4>
+
+<p>获取目标指定buff的层数</p>
+
+
+
+<pre class="prettyprint hljs-dark"><code class="hljs mipsasm"><span class="hljs-built_in">count</span> = msGBC(<span class="hljs-keyword">buff, </span>unit, <span class="hljs-keyword">buffCaster, </span>harmful)<br></code></pre>
+
+<p><strong>参数</strong></p>
+
+<p><font color="Crimson" size="4">Buffs</font> <br>
+string - 需要判断的buff或debuff，可以是一个或多个文字或数字的组合。 <br>
+如：<code>"回春术" "123" "战斗怒吼,456" "7894,6548"</code></p>
+
+<p><font color="Crimson" size="4">unit</font> <br>
+string - 判断拥有buffs的目标。默认: “player”</p>
+
+<p><font color="Crimson" size="4">buffCaster</font> <br>
+string - Buff的释放者。如: <code>"target","player"</code>。默认:nil  无限定</p>
+
+<p><font color="Crimson" size="4">harmful</font> <br>
+bool - 是否为有害Buff。</p>
+
+<ul><li>nil - 无限定</li>
+<li>true - 有害</li>
+<li>false - 有益</li>
+</ul>
+
+<p><strong>返回</strong></p>
+
+<p><font color="Crimson" size="4">count</font> <br>
+number - Buff或debuff的层数。</p>
+
+<p><strong>举例</strong> <br>
+1.获取自己身上”生命绽放”的层数。</p>
+
+<pre class="prettyprint hljs-dark"><code class="hljs stylus"><span class="hljs-function"><span class="hljs-title">msGBC</span><span class="hljs-params">(<span class="hljs-string">"生命绽放"</span>)</span></span><br></code></pre>
+
+<p>2.获取焦点身上是自己施放的痛楚的层数。</p>
+
+
+
+<pre class="prettyprint hljs-dark"><code class="hljs stylus"><span class="hljs-function"><span class="hljs-title">msGBC</span><span class="hljs-params">(<span class="hljs-string">"痛楚"</span>,<span class="hljs-string">"focus"</span>,<span class="hljs-string">"player"</span>)</span></span><br></code></pre>
+
+<hr>
+
+<hr>
+
+<h4 id="GBS">msGBS(buffTypes, unit, harmful)</h4>
+
+<p>获取目标指定buff类型的数量</p>
+
+
+
+<pre class="prettyprint hljs-dark"><code class="hljs fortran"><span class="hljs-keyword">number</span> = msGBS(buffTypes, <span class="hljs-keyword">unit</span>, harmful)<br></code></pre>
+
+<p><strong>参数</strong></p>
+
+<p><font color="Crimson" size="4">buffTypes</font> <br>
+string - 需要判断的buff或debuff类型</p>
+
+<ul><li>Curse  - 诅咒</li>
+<li>Disease - 疾病</li>
+<li>Magic  - 魔法</li>
+<li>Poison - 毒药</li>
+</ul>
+
+<p><font color="Crimson" size="4">unit</font> <br>
+string - 判断拥有buffs的目标。默认: “player”</p>
+
+<p><font color="Crimson" size="4">harmful</font> <br>
+bool - 是否为有害Buff。</p>
+
+<ul><li>nil - 无限定</li>
+<li>true - 有害</li>
+<li>false - 有益</li>
+</ul>
+
+<p><strong>返回</strong></p>
+
+<p><font color="Crimson" size="4">number</font> <br>
+number - 数量。</p>
+
+<hr>
+
+<hr>
+
+<h4 id="GUBS">msGUBS(buffs, unit, harmful)</h4>
+
+<p>获取目标拥有buffs的总数量</p>
+
+<pre class="prettyprint hljs-dark"><code class="hljs fortran"><span class="hljs-built_in">Sum</span> = msGUBS(buffs, <span class="hljs-keyword">unit</span>, harmful)<br></code></pre>
+
+<p><strong>参数</strong></p>
+
+<p><font color="Crimson" size="4">buffs</font> <br>
+string - 需要判断的buff或debuff，可以是一个或多个文字或数字的组合。 <br>
+如：<code>"回春术" "123" "战斗怒吼,456" "7894,6548"</code></p>
+
+<p><font color="Crimson" size="4">unit</font> <br>
+string - 判断拥有buffs的目标。默认: “player”</p>
+
+<p><font color="Crimson" size="4">harmful</font> <br>
+bool - 是否为有害Buff。</p>
+
+<ul><li>nil - 无限定</li>
+<li>true - 有害</li>
+<li>false - 有益</li>
+</ul>
+
+<p><strong>返回</strong></p>
+
+<p><font color="Crimson" size="4">Sum</font> <br>
+number - Buff或debuff的总数量。</p>
+
+<hr>
+
+<hr>
+
+<h4 id="GCST">msGCST(unit)</h4>
+
+<p>获取目标读条技能的剩余时间及经历时间</p>
+
+<pre class="prettyprint hljs-dark"><code class="hljs delphi">time1,time2 = msGCST(<span class="hljs-keyword">unit</span>)<br></code></pre>
+
+<p><strong>参数</strong></p>
+
+<p><font color="Crimson" size="4">unit</font> <br>
+string - 目标。默认: “target”</p>
+
+<p><strong>返回</strong></p>
+
+<p><font color="Crimson" size="4">time1</font> <br>
+number - 读条技能的剩余时间。</p>
+
+<p><font color="Crimson" size="4">time2</font> <br>
+number - 读条技能的经历时间。</p>
+
+<hr>
+
+<hr>
+
+<h4 id="GSCT">msGSCT(sourceGUID,spellName)</h4>
+
+<p>获取目标成功释放技能后经历的时间及该技能命中的目标（客户端读条时候会重置）</p>
+
+<pre class="prettyprint hljs-dark"><code class="hljs stylus"><span class="hljs-selector-tag">time</span>,Unit = msGSCT(sourceGUID,spellName)<br></code></pre>
+
+<p><strong>参数</strong></p>
+
+<p><font color="Crimson" size="4">sourceGUID</font> <br>
+string - 释放技能的目标。</p>
+
+<p><font color="Crimson" size="4">spellName</font> <br>
+string - 技能名称。</p>
+
+<p><strong>返回</strong></p>
+
+<p><font color="Crimson" size="4">time</font> <br>
+number - 技能释放后成功时间。</p>
+
+<p><font color="Crimson" size="4">Unit</font> <br>
+number - 技能命中的目标。</p>
+
+<hr>
+
+<hr>
+
+<h4 id="GLS">msGLS()</h4>
+
+<p>获取自己上一个释放成功的技能名称</p>
+
+<pre class="prettyprint hljs-dark"><code class="hljs ini"><span class="hljs-attr">spell</span> = msGLS()<br></code></pre>
+
+<p><strong>返回</strong></p>
+
+<p><font color="Crimson" size="4">spell</font> <br>
+string - 技能名称。</p>
+
+<hr>
+
+<hr>
+
+<h4 id="GC">msGC()</h4>
+
+<p>获取玩家当前读条信息 <br>
+返回当前读条的目标及目标的血量百分比,目标收到的过量治疗量,目标收到我的治疗量,目标收到所有人的治疗量</p>
+
+<pre class="prettyprint hljs-dark"><code class="hljs delphi"><span class="hljs-keyword">Unit</span>,HP,HealthExcess,MyIncomingHeal,AllIncomingHeal = msGC()<br></code></pre>
+
+<p><strong>返回</strong></p>
+
+<p><font color="Crimson" size="4">Unit</font> <br>
+string - 我读条时的目标。</p>
+
+<p><font color="Crimson" size="4">HP</font> <br>
+number - 目标的血量百分比。</p>
+
+<p><font color="Crimson" size="4">HealthExcess</font> <br>
+number - 目标收到的过量治疗量。</p>
+
+<p><font color="Crimson" size="4">MyIncomingHeal</font> <br>
+number - 目标收到我的治疗量。</p>
+
+<p><font color="Crimson" size="4">AllIncomingHeal</font> <br>
+number - 目标收到所有人的治疗量。</p>
+
+<hr>
+
+<hr>
+
+<h4 id="GTT">msGTT(index)</h4>
+
+<p>获取玩家的雕像、蘑菇、图腾的剩余时间</p>
+
+<pre class="prettyprint hljs-dark"><code class="hljs excel"><span class="hljs-built_in">time</span> = msGTT(<span class="hljs-built_in">index</span>)<br></code></pre>
+
+<p><strong>参数</strong></p>
+
+<p><font color="Crimson" size="4">index</font> <br>
+number or string - 图腾中文全称名称、蘑菇指定位置的:1,2,3。</p>
+
+<p><strong>返回</strong></p>
+
+<p><font color="Crimson" size="4">time</font> <br>
+number - 剩余时间。</p>
+
+<hr>
+
+<hr>
+
+<h4 id="GCD">msGCD(spell)</h4>
+
+<p>获取技能的剩余时间</p>
+
+<pre class="prettyprint hljs-dark"><code class="hljs ini"><span class="hljs-attr">time</span> = msGCD(spell)<br></code></pre>
+
+<p><strong>参数</strong></p>
+
+<p><font color="Crimson" size="4">spell</font> <br>
+string - 技能或物品名称。默认：nil，返回公共CD。</p>
+
+<p><strong>返回</strong></p>
+
+<p><font color="Crimson" size="4">time</font> <br>
+number - 剩余时间。</p>
+
+<hr>
+
+<hr>
+
+<h4 id="GSC">msGSC(spell)</h4>
+
+<p>获取充能技能的可用数量及冷却时间</p>
+
+<pre class="prettyprint hljs-dark"><code class="hljs bash">charges,<span class="hljs-built_in">cd</span> = msGSC(spell)<br></code></pre>
+
+<p><strong>参数</strong></p>
+
+<p><font color="Crimson" size="4">spell</font> <br>
+string - 技能或物品名称。默认：nil，返回公共CD。</p>
+
+<p><strong>返回</strong></p>
+
+<p><font color="Crimson" size="4">charges</font> <br>
+number - 充能技能的可用数量。</p>
+
+<p><font color="Crimson" size="4">cd</font> <br>
+number - 充能的冷却时间。</p>
+
+<hr>
+
+<hr>
+
+<h4 id="SV">msSV(VariableName,Value)</h4>
+
+<p>设置变量</p>
+
+<pre class="prettyprint hljs-dark"><code class="hljs stylus"><span class="hljs-function"><span class="hljs-title">msSV</span><span class="hljs-params">(VariableName,Value)</span></span><br></code></pre>
+
+<p><strong>参数</strong></p>
+
+<p><font color="Crimson" size="4">VariableName</font> <br>
+string - 变量名称</p>
+
+<p><font color="Crimson" size="4">Value</font> <br>
+string - 变量内容。</p>
+
+<hr>
+
+<hr>
+
+<h4 id="GV">msGV(VariableName)</h4>
+
+<p>读取变量</p>
+
+<pre class="prettyprint hljs-dark"><code class="hljs ini"><span class="hljs-attr">succ</span> = msGV(VariableName)<br></code></pre>
+
+<p><strong>参数</strong></p>
+
+<p><font color="Crimson" size="4">VariableName</font> <br>
+string - 变量名称</p>
+
+<p><strong>返回</strong></p>
+
+<p><font color="Crimson" size="4">succ</font> <br>
+string - 变量内容。</p>
+
+<p><strong>举例</strong> <br>
+1.首先，我们做个开关宏： <br>
+<code>/run mssv(“AOE开关”,true)</code> - 这个是打开开关宏，当然，名称可以修改成自己好记的名称。</p>
+
+<p><code>/run mssv(“AOE开关”,false)</code> - 这个是关闭开关宏。</p>
+
+<p>2.脚本里面加入判断开关的函数</p>
+
+<pre class="prettyprint hljs-dark"><code class="hljs ada"><span class="hljs-comment">--单体输出段</span><br><span class="hljs-keyword">if</span> 条件 <span class="hljs-keyword">then</span><br>    技能<br><span class="hljs-keyword">end</span><br><span class="hljs-comment">--AOE脚本段</span><br><span class="hljs-comment">--条件里面添加对开关的判断，是true就通过，是false就不通过</span><br><span class="hljs-keyword">if</span> msGV(“AOE开关”) <span class="hljs-keyword">and</span> 其他条件 <span class="hljs-keyword">and</span> 其他条件 <span class="hljs-keyword">then</span><br>    <span class="hljs-comment">--技能的输出</span><br>    <span class="hljs-comment">--当然，可以在这段脚本里面添加一些判断来对”AOE开关”关闭掉。例如：</span><br>    <span class="hljs-keyword">if</span> 某些条件下 <span class="hljs-keyword">then</span><br>        msSV(“AOE开关”,<span class="hljs-literal">false</span>)<br>    <span class="hljs-keyword">end</span><br><span class="hljs-keyword">end</span><br></code></pre>
+
+<hr>
+
+<hr>
+
+<h4 id="IS">msIS(Spell,Unit,Stop,Time)</h4>
+
+<p>技能插入</p>
+
+
+
+<pre class="prettyprint hljs-dark"><code class="hljs stylus"><span class="hljs-function"><span class="hljs-title">msIS</span><span class="hljs-params">(Spell,Unit,Stop,Time)</span></span><br></code></pre>
+
+<p><strong>参数</strong></p>
+
+<p><font color="Crimson" size="4">Spell</font> <br>
+string - 技能</p>
+
+<p><font color="Crimson" size="4">Unit</font> <br>
+string - 目标</p>
+
+<p><font color="Crimson" size="4">Stop</font> <br>
+bool - 是否打断当前施法。</p>
+
+<p><font color="Crimson" size="4">Time</font> <br>
+number - 技能插入执行时间。默认：GCD的时间。</p>
+
+<hr>
+
+<hr>
+
+<h4 id="RS">msRS()</h4>
+
+<p>执行插入的技能</p>
+
+<pre class="prettyprint hljs-dark"><code class="hljs ini"><span class="hljs-attr">succ</span> = msRS()<br></code></pre>
+
+<p><strong>返回</strong> <br>
+<font color="Crimson" size="4">succ</font> <br>
+string - 返回执行成功后的技能名称。</p>
+
+<p><strong>举例</strong> <br>
+1.我们做个宏。 <br>
+例如：想对插入对当前目标施放”风暴之锤”，那么做个宏 <br>
+<code>/run msIS("风暴之锤","target")</code></p>
+
+<p>2.在编写脚本的时候，添加函数msRS()；</p>
+
+<pre class="prettyprint hljs-dark"><code class="hljs ada"><span class="hljs-comment">--在想让技能插入的位置放进去就好了。</span><br>例如：<br><span class="hljs-keyword">if</span> 条件 <span class="hljs-keyword">then</span><br>    保命技能<br><span class="hljs-keyword">end</span><br><span class="hljs-comment">--在这里添加执行技能插入函数</span><br>msRS()<br><span class="hljs-comment">--常规伤害输出</span><br><span class="hljs-keyword">if</span> 条件 <span class="hljs-keyword">then</span><br>    伤害技能<br><span class="hljs-keyword">end</span><br></code></pre>
+
+<hr>
+
+<hr>
+
+<h4 id="INT">msINT(TimeName,Time)</h4>
+
+<p>延时器</p>
+
+
+
+<pre class="prettyprint hljs-dark"><code class="hljs gauss"><span class="hljs-keyword">bool</span> = msINT(TimeName,<span class="hljs-built_in">Time</span>)<br></code></pre>
+
+<p><strong>参数</strong></p>
+
+<p><font color="Crimson" size="4">TimeName</font> <br>
+string - 延时器名称，可以是任意字符串。</p>
+
+<p><font color="Crimson" size="4">Time</font> <br>
+number - 延时的时间，单位：秒。</p>
+
+<p><strong>返回</strong></p>
+
+<p><font color="Crimson" size="4">bool</font> <br>
+bool - 延时是否完成。</p>
+
+<p><strong>举例</strong> <br>
+1.每隔3秒释放一次技能</p>
+
+<pre class="prettyprint hljs-dark"><code class="hljs ada"><span class="hljs-keyword">if</span> msISC(<span class="hljs-string">"凛风冲击"</span>,<span class="hljs-string">"target"</span>) <span class="hljs-keyword">and</span> msINT(<span class="hljs-string">"等一下"</span>,<span class="hljs-number">3</span>) <span class="hljs-keyword">then</span><br>    msR(<span class="hljs-string">"凛风冲击"</span>,<span class="hljs-string">"target"</span>)<br><span class="hljs-keyword">end</span><br></code></pre>
+
+<hr>
+
+<hr>
+
+<h4 id="GPO">msGPO()</h4>
+
+<p>获取特殊能量值</p>
+
+
+
+<pre class="prettyprint hljs-dark"><code class="hljs ini"><span class="hljs-attr">result</span> = msGPO()<br></code></pre>
+
+<p><strong>返回</strong></p>
+
+<p><font color="Crimson" size="4">result</font> <br>
+number - 特殊能量值。</p>
+
+<hr>
+
+<hr>
+
+<h4 id="GUH">msGUH(unit)</h4>
+
+<p>获取目标的治疗量</p>
+
+<pre class="prettyprint hljs-dark"><code class="hljs delphi">HealthExcess,MyIncomingHeal,AllIncomingHeal = msGUH(<span class="hljs-keyword">unit</span>)<br></code></pre>
+
+<p><strong>参数</strong></p>
+
+<p><font color="Crimson" size="4">unit</font> <br>
+string - 目标。</p>
+
+<p><strong>返回</strong></p>
+
+<p><font color="Crimson" size="4">HealthExcess</font> <br>
+number - 目标收到的过量治疗量。</p>
+
+<p><font color="Crimson" size="4">MyIncomingHeal</font> <br>
+number - 目标收到我的治疗量。</p>
+
+<p><font color="Crimson" size="4">AllIncomingHeal</font> <br>
+number - 目标收到所有人的治疗量</p>
+
+<hr>
+
+<hr>
+
+<h4 id="GSN">msGSN(spell)</h4>
+
+<p>获取技能描述里的数字信息</p>
+
+<pre class="prettyprint hljs-dark"><code class="hljs gams"><span class="hljs-function"><span class="hljs-title">unpack1</span></span>, unpack2 ... = msGSN(spell)<br></code></pre>
+
+<p><strong>参数</strong></p>
+
+<p><font color="Crimson" size="4">spell</font> <br>
+string - 技能名称。支持中文及数字ID。</p>
+
+<p><strong>返回</strong></p>
+
+<p><font color="Crimson" size="4">unpack1, unpack2 … </font> <br>
+string - 技能的数字信息。</p>
+
+<hr>
+
+<hr>
+
+<h4 id="GBB">msGBB(buff, unit)</h4>
+
+<p>获取目标指定buff的描述</p>
+
+<pre class="prettyprint hljs-dark"><code class="hljs ini"><span class="hljs-attr">result</span> = msGBB(buff, unit)<br></code></pre>
+
+<p><strong>参数</strong></p>
+
+<p><font color="Crimson" size="4">buff</font> <br>
+string - buff名称或ID。支持中文及数字ID。</p>
+
+<p><font color="Crimson" size="4">unit</font> <br>
+string - 目标。</p>
+
+<p><strong>返回</strong></p>
+
+<p><font color="Crimson" size="4">result</font> <br>
+string - buff的描述。</p>
+
+<hr>
+
+<hr>
+
+<h4 id="GBN">msGBN(buff, unit)</h4>
+
+<p>获取buff描述里的数字信息</p>
+
+<pre class="prettyprint hljs-dark"><code class="hljs gams"><span class="hljs-function"><span class="hljs-title">unpack1</span></span>, unpack2 ... = msGBN(buff, unit)<br></code></pre>
+
+<p><strong>参数</strong></p>
+
+<p><font color="Crimson" size="4">buff</font> <br>
+string - buff名称或ID。支持中文及数字ID。</p>
+
+<p><font color="Crimson" size="4">unit</font> <br>
+string - 目标。</p>
+
+<p><strong>返回</strong></p>
+
+<p><font color="Crimson" size="4">unpack1, unpack2 … </font> <br>
+string - buff的数字信息。</p>
+
+<hr>
+
+<hr>
+
+<h4 id="GAOS">msGAOS(specID)</h4>
+
+<p>获取JJC敌对相应专精的目标群</p>
+
+<pre class="prettyprint hljs-dark"><code class="hljs ini"><span class="hljs-attr">Arena</span> = msGAOS(specID)<br></code></pre>
+
+<p><strong>参数</strong></p>
+
+<p><font color="Crimson" size="4">specID</font> <br>
+number - 填写数字specID，可以填写多个。<a href="http://wowprogramming.com/docs/api_types#specID" target="_blank">http://wowprogramming.com/docs/api_types#specID</a></p>
+
+<p><strong>返回</strong></p>
+
+<p><font color="Crimson" size="4">Arena</font> <br>
+table - 目标组。</p>
+
+<hr>
+
+<hr>
+
+<h4 id="GPBU">msGPBU(Distance,First,Second)</h4>
+
+<p>获取Second对应目标 First 的 Distance 码的位置</p>
+
+<pre class="prettyprint hljs-dark"><code class="hljs excel">x,y,z = msGPBU(Distance,First,<span class="hljs-built_in">Second</span>)<br></code></pre>
+
+<p><strong>参数</strong></p>
+
+<p><font color="Crimson" size="4">Distance</font> <br>
+number - 码数。</p>
+
+<p><font color="Crimson" size="4">First</font> <br>
+string - 获取的目标。默认: “target”</p>
+
+<p><font color="Crimson" size="4">Second</font> <br>
+string - 参考的目标。默认: “player”</p>
+
+<p><strong>返回</strong></p>
+
+<p><font color="Crimson" size="4">x,y,z </font> <br>
+number - 坐标。被msRun使用的时候必须加上中括号<code>{}</code>。如<code>{ x,y,z }</code></p>
+
+<hr>
+
+<hr>
+
+<h4 id="GUT">msGUT(unit)</h4>
+
+<p>获取Second对应目标 First 的 Distance 码的位置</p>
+
+<pre class="prettyprint hljs-dark"><code class="hljs fortran"><span class="hljs-keyword">target</span> = msGUT(<span class="hljs-keyword">unit</span>)<br></code></pre>
+
+<p><strong>参数</strong></p>
+
+<p><font color="Crimson" size="4">unit</font> <br>
+string - 目标。默认: “target”</p>
+
+<p><strong>返回</strong></p>
+
+<p><font color="Crimson" size="4">target</font> <br>
+string - 目标的目标。</p>
+
+<hr>
+
+<hr>
+
+<h4 id="GBR">msGBR(unit)</h4>
+
+<p>获取目标模型半径</p>
+
+<pre class="prettyprint hljs-dark"><code class="hljs ini"><span class="hljs-attr">Radius</span> = msGBR(unit)<br></code></pre>
+
+<p><strong>参数</strong></p>
+
+<p><font color="Crimson" size="4">unit</font> <br>
+string - 目标。默认: “target”</p>
+
+<p><strong>返回</strong></p>
+
+<p><font color="Crimson" size="4">Radius</font> <br>
+number - 目标的模型半径。</p>
+
+<hr>
+
+<hr>
+
+<h4 id="GCR">msGCR(unit)</h4>
+
+<p>获取目标模型半径</p>
+
+<pre class="prettyprint hljs-dark"><code class="hljs ini"><span class="hljs-attr">Radius</span> = msGCR(unit)<br></code></pre>
+
+<p><strong>参数</strong></p>
+
+<p><font color="Crimson" size="4">unit</font> <br>
+string - 目标。默认: “target”</p>
+
+<p><strong>返回</strong></p>
+
+<p><font color="Crimson" size="4">Radius</font> <br>
+number - 目标的可攻击范围。</p>
+
+<hr>
+
+<hr>
+
+<h4 id="GRC">msGRC()</h4>
+
+<p>获取正在冷却的符文最快的冷却时间</p>
+
+<pre class="prettyprint hljs-dark"><code class="hljs ini"><span class="hljs-attr">Radius</span> = msGRC()<br></code></pre>
+
+<p><strong>返回</strong></p>
+
+<p><font color="Crimson" size="4">Radius</font> <br>
+number - 返回符文最快的冷却时间。</p>
+
+<hr>
+
+<hr>
+
+<h4 id="GRN">msGRN()</h4>
+
+<p>获取可用的符文数量</p>
+
+<pre class="prettyprint hljs-dark"><code class="hljs ini"><span class="hljs-attr">Radius</span> = msGRN()<br></code></pre>
+
+<p><strong>返回</strong></p>
+
+<p><font color="Crimson" size="4">Radius</font> <br>
+number - 返回可用的符文数量。</p>
+
+<hr>
+
+<hr>
+
+<h4 id="IB">msIB(unit)</h4>
+
+<p>判断目标是否副本中的boss</p>
+
+<pre class="prettyprint hljs-dark"><code class="hljs ini"><span class="hljs-attr">Radius</span> = msIB(unit)<br></code></pre>
+
+<p><strong>参数</strong></p>
+
+<p><font color="Crimson" size="4">unit</font> <br>
+string - 目标。</p>
+
+<p><strong>返回</strong></p>
+
+<p><font color="Crimson" size="4">Radius</font> <br>
+bool - 目标是否副本中的boss。</p>
+
+<hr>
+
+<hr></div></div></body></html>

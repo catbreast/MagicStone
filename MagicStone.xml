@@ -1,0 +1,26 @@
+﻿<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
+	../UI.xsd">
+	<Frame>
+		<Scripts>
+			<OnUpdate>
+				if FireHack and not MagicStoneForFireHack then
+					local fullpath = GetGameDirectory() .. "\\Interface\\Addons\\MagicStone\\UIUI.lua"
+					local content = ReadFile(fullpath)
+					local func, err = loadstring(content)
+						if not func then
+						   print("|cffff0000" .. err .. "|r")
+						   return false, err
+						else
+						   local succ, err = pcall(func)
+						   if not succ then
+							  print("|cffff0000" .. err .. "|r")
+							  return false, err
+						   end
+						end
+					MagicStoneForFireHack = true
+				end
+			</OnUpdate>
+	
+		</Scripts>
+	</Frame>
+</Ui>

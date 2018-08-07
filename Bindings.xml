@@ -1,0 +1,22 @@
+﻿<Bindings>
+	<Binding name="MagicStoneShow" header="MagicStone">
+		if ScenarioButton:IsShown() then
+			ScenarioButton:Hide()
+		else
+			ScenarioButton:Show()
+		end
+	</Binding>
+	<Binding name="MagicStoneOnce" >
+		msScriptList("once")
+	</Binding>
+	<Binding name="MagicStoneStartStop"  >
+		msScriptList("startstop")
+	</Binding>
+	<Binding name="MagicStoneStart" >
+		msScriptList("start")
+	</Binding>
+	<Binding name="MagicStoneStop" >
+		msScriptList("stop")
+	</Binding>
+</Bindings>
+

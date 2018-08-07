@@ -1,0 +1,13 @@
+百度下载脚本编辑软件:
+Notepad++
+
+langs.xml覆盖路径:
+
+C:\Users\系统用户名称\AppData\Roaming\Notepad++
+
+例如:
+
+C:\Users\Administrator\AppData\Roaming\Notepad++
+
+
+如果找不到该路径,尝试直接在电脑上搜索langs.xml

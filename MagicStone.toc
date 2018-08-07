@@ -1,0 +1,23 @@
+﻿## Interface: 80000
+## Title-zhCN: <|cFFFF4500MagicStone|r> |cFF00BFFF魔石脚本管理系统|r
+## Notes-zhCN: |cFFFFD700对WOW现有的API函数进行包装与重新设计并带脚本管理系统.|r
+## DefaultState: Enabled
+## SavedVariablesPerCharacter: MagicStonehelper MagicStoneLuaList WowLua_DB
+
+Libs\LibStub.lua
+Libs\CallbackHandler-1.0.lua
+Libs\LibRangeCheck-2.0.lua
+Libs\DropDownMenu.lua
+UI\Localization.lua
+UI\WowLua.lua
+UI\FAIAP.lua
+UI\WowLua.xml
+UI\WowLua_Config.lua
+UI.lua
+
+
+
+
+
+
+
