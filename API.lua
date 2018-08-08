@@ -1024,7 +1024,7 @@ function msII(unit1, unit2)
 		x2, y2, z2 = unit2[1], unit2[2], unit2[3]
 	end
 	--print(x1, y1, z1)
-	if type(x1) ~= 'number' or type(y1) ~= 'number' or type(z1) ~= 'number' then
+	if type(x1) ~= "number" or type(y1) ~= "number" or type(z1) ~= "number" then
 		return false, "目标或坐标无效"
 	end
 	if type(x2) ~= "number" or type(y2) ~= "number" or type(z2) ~= "number" then
@@ -2305,7 +2305,7 @@ end
 local MagicStonehelper = MagicStonehelper
 --技能插入
 local UseAction_msInRun = UseAction
-UseAction = function(slot, ...)
+--[[UseAction = function(slot, ...)
 	if not GetCursorInfo() then
 		local actionType, id = GetActionInfo(slot)
 		local starttime, duration = GetSpellCooldown(61304)
@@ -2317,7 +2317,7 @@ UseAction = function(slot, ...)
 		end
 	end
 	securecall(UseAction_msInRun, slot)
-end
+end]]
 
 --防止暂离
 local SetHackEnabled_Original = SetHackEnabled
@@ -2961,11 +2961,11 @@ function msOvaleIcon(icon) -----
 	if not _G.OvaleDB then
 		return false, "请先安装Ovale插件。"
 	end
-	if icon==nil then
+	if icon == nil then
 		icon = msOvale2
 	end
 	--print(type(icon))
-	if type (icon) ~= "number"  then
+	if type(icon) ~= "number" then
 		return false, "图标材质ID不正确，ID为数字，清确保按注释修改。"
 	end
 	for i = 1, MAX_SKILLLINE_TABS do
