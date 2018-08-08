@@ -861,10 +861,9 @@ function msICS(unit, spells, interrupt)
 		interrupt = nil
 	end
 	--local spell1, _, _, _, starttime1, endtime1, _, _, interrupt1 = UnitCastingInfo(unit) --不可以打断返回true,可以打断返回false
-	local spell1, text1, texture1, starttime1, endtime1, isTradeSkill, castID, interrupt1, spellId1 =
-		UnitCastingInfo(unit)
+	local spell1, text1, texture1, starttime1, endtime1, isTradeSkill, castID, interrupt1, spellId1 = UnitCastingInfo(unit)
 	--local spell2, _, _, _, starttime2, endtime2, _, interrupt2 = UnitChannelInfo(unit)
-	local spell2, text2, texture2, starttime2, endtime2, isTradeSkill,  interrupt2 = UnitChannelInfo(unit)
+	local spell2, text2, texture2, starttime2, endtime2, isTradeSkill, interrupt2 = UnitChannelInfo(unit)
 	if spell1 then
 		if interrupt == interrupt1 then
 			return false, "目标正在施放一个技能，但其可打断性不是", interrupt
@@ -1025,7 +1024,7 @@ function msII(unit1, unit2)
 		x2, y2, z2 = unit2[1], unit2[2], unit2[3]
 	end
 	--print(x1, y1, z1)
-	if type(x1) ~= number or type(y1) ~= number or type(z1) ~= number then
+	if type(x1) ~= 'number' or type(y1) ~= 'number' or type(z1) ~= 'number' then
 		return false, "目标或坐标无效"
 	end
 	if type(x2) ~= "number" or type(y2) ~= "number" or type(z2) ~= "number" then
@@ -2945,5 +2944,41 @@ function msIII(Unit1, Unit2)
 		end
 	else
 		return true
+	end
+end
+-------------------------------
+function msOvaleIcon(icon) -----
+	--[[
+		修改Ovale\dist\Icon.lua
+		在
+		                self.icone:Show()
+				self.icone:SetTexture(actionTexture)
+				后面一行添加一个全局变量=actionTexture
+				如：
+				msOvale2 = actionTexture
+				在msR()中调用，不能添加目标参数
+	]]
+	if not _G.OvaleDB then
+		return false, "请先安装Ovale插件。"
+	end
+	if icon==nil then
+		icon = msOvale2
+	end
+	--print(type(icon))
+	if type (icon) ~= "number"  then
+		return false, "图标材质ID不正确，ID为数字，清确保按注释修改。"
+	end
+	for i = 1, MAX_SKILLLINE_TABS do
+		local name, texture, offset, numSpells = GetSpellTabInfo(i)
+		if not texture then
+			break
+		end
+		for s = offset + 1, offset + numSpells do
+			local name1, rank1, icon1, castTime1, minRange1, maxRange1, spellId1 = GetSpellInfo(s, BOOKTYPE_SPELL)
+			if icon1 == icon then
+				return name1, spellId1
+			end
+			-- DEFAULT_CHAT_FRAME:AddMessage(name1..": "..spellId1);
+		end
 	end
 end
