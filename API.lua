@@ -626,16 +626,30 @@ local GuidTable = {}
 local function GROUP_UPDATE()
 	--print(GetNumGroupMembers(),GetNumSubgroupMembers(),"刷新队伍列表")
 	wipe(GuidTable)
-	local group = IsInRaid() and "raid" or "party"
-	local Members = IsInRaid() and GetNumGroupMembers() or (GetNumSubgroupMembers() + 1)
-	for i = 1, Members do
-		if i == Members and group == "party" then
-			Unit = "player"
-		else
-			Unit = group .. i
+	--local group = IsInRaid() and "raid" or "party"
+	local gourptype
+	local InRaid = IsInRaid()
+	local InParty = UnitInParty("player")
+	if InRaid and InParty then
+		grouptype = "raid"
+	end
+	if InRaid == false and InParty then
+		gourptype = "party"
+	end
+	--local Members = IsInRaid() and GetNumGroupMembers() or (GetNumSubgroupMembers() + 1)
+	local Members = GetNumGroupMembers()
+	if Members > 0 then
+		for i = 1, Members do
+			--if ObjectRawType(thisUnit, player)
+			--[[	if i == Members and group == "party" then
+				Unit = "player"
+			else
+				Unit = group .. i
+			end
+			--print(UnitName(Unit))]]
+			local Unit = gourptype .. i
+			tinsert(GuidTable, Unit)
 		end
-		--print(UnitName(Unit))
-		tinsert(GuidTable, Unit)
 	end
 end
 local GROUPUPDATE = CreateFrame("Frame")
@@ -2318,7 +2332,6 @@ local UseAction_msInRun = UseAction
 	end
 	securecall(UseAction_msInRun, slot)
 end]]
-
 --防止暂离
 local SetHackEnabled_Original = SetHackEnabled
 function SetHackEnabled(Name, Enable)
