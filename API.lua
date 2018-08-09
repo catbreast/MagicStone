@@ -2086,7 +2086,7 @@ function msIC(Class, Unit)
 	elseif type(Unit) ~= "string" then
 		Unit = "target"
 	end
-	local playerClass, englishClass = UnitClassBase(Unit)
+	local playerClass, englishClass = UnitClass(Unit)
 	for i = 1, #Class do
 		if playerClass == Class[i] then
 			return playerClass
