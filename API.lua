@@ -630,11 +630,11 @@ local function GROUP_UPDATE()
 	local gourptype
 	local InRaid = IsInRaid()
 	local InParty = UnitInParty("player")
-	if InRaid and InParty then
+	if InRaid and InParty then		
 		grouptype = "raid"
 	end
 	if InRaid == false and InParty then
-		gourptype = "party"
+		grouptype = "party"
 	end
 	--local Members = IsInRaid() and GetNumGroupMembers() or (GetNumSubgroupMembers() + 1)
 	local Members = GetNumGroupMembers()
@@ -647,7 +647,7 @@ local function GROUP_UPDATE()
 				Unit = group .. i
 			end
 			--print(UnitName(Unit))]]
-			local Unit = gourptype .. i
+			local Unit = grouptype .. i
 			tinsert(GuidTable, Unit)
 		end
 	end
