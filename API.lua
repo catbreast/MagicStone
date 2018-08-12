@@ -204,7 +204,7 @@ local function UpdateBook(bookType)
 				TalentSpell[idPve] = selectedPve
 			end
 		end
-		--[[ 		for Row = 1, 6 do
+	--[[ 	for Row = 1, 6 do
 			local _, namePvp, _, selectedPvp, _, idpvp = GetPvpTalentInfo(Row, Column, ActiveSpecGroup)
 			if namePvp then
 				TalentSpell[namePvp] = selectedPvp
@@ -432,7 +432,8 @@ function msGSI(spell)
 		end
 	end
 	if not spelltype then
-		local Spell_name, _, _, _, _, Spell_Id = GetSpellInfo(spell)
+		--local Spell_name, _, _, _, _, Spell_Id = GetSpellInfo(spell)
+		local Spell_name, rank, icon, castTime, minRange, maxRange, Spell_Id = GetSpellInfo(spell)
 		if Spell_name then
 			isspell = true
 			spelltype = "SPELL"
