@@ -2162,7 +2162,7 @@ function msInterrupt(spell, casttime, spells, objType)
 	for i = 1, GetObjectCount() do
 		local thisUnit = GetObjectWithIndex(i)
 		if
-			UnitIsVisible(thisUnit) and UnitCanAttack(thisUnit, "player") and msII(thisUnit) and UnitAffectingCombat(thisUnit) and
+			UnitIsVisible(thisUnit) and UnitCanAttack(thisUnit, "player") and msIII(thisUnit) and UnitAffectingCombat(thisUnit) and
 				not UnitIsDeadOrGhost(thisUnit) and
 				(not objType or UnitIsPlayer(thisUnit))
 		 then
