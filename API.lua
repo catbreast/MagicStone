@@ -1031,16 +1031,17 @@ function msII(unit1, unit2)
 	local x1, y1, z1, x2, y2, z2
 	local h1, h2 = 0, 0
 	if type(unit1) == "string" then
+		--h1 = UnitHeight(unit1)
 		x1, y1, z1 = ObjectPosition(unit1)
 	elseif type(unit1) == "table" then
 		x1, y1, z1 = unit1[1], unit1[2], unit1[3]
-	--print(x1, y1, z1)
 	end
 	if type(unit2) == "string" then
+		--	h2 = UnitHeight(unit2)
 		x2, y2, z2 = ObjectPosition(unit2)
+	elseif type(unit2) == "table" then
 		x2, y2, z2 = unit2[1], unit2[2], unit2[3]
 	end
-	--print(x1, y1, z1)
 	if type(x1) ~= "number" or type(y1) ~= "number" or type(z1) ~= "number" then
 		return false, "目标或坐标无效"
 	end
@@ -1048,7 +1049,7 @@ function msII(unit1, unit2)
 		return false, "目标或坐标无效"
 	end
 	local losFlags = bit.bor(0x10, 0x100, 0x1)
-	if TraceLine(x1, y1, z1, x2, y2, z2[losFlags]) then
+	if TraceLine(x1, y1, z1 + h1, x2, y2, z2 + h2, losFlags) then
 		return false
 	else
 		return true
