@@ -157,12 +157,8 @@ local spellsByName_pet = {}
 local spellsByID_pet = {}
 local TalentSpell = {}
 local function UpdateBook(bookType)
-	local _, _, offs, numspells = GetSpellTabInfo(3)
-	local max = offs
-	if numspells == 0 then
-		local _, _, offs, numspells = GetSpellTabInfo(2)
-		max = offs + numspells
-	end
+	local _, _, offs, numspells = GetSpellTabInfo(2)
+	local maxnum = numspells
 	local spellsByName, spellsByID = {}, {}
 	if bookType == "spell" then
 		spellsByName = spellsByName_spell
@@ -173,7 +169,7 @@ local function UpdateBook(bookType)
 	end
 	wipe(spellsByName)
 	wipe(spellsByID)
-	for spellBookID = 1, max do
+	for spellBookID = 1, maxnum do
 		local type, baseSpellID = GetSpellBookItemInfo(spellBookID, bookType)
 		if type == "SPELL" then
 			local currentSpellName = GetSpellBookItemName(spellBookID, bookType)
@@ -204,6 +200,13 @@ local function UpdateBook(bookType)
 				TalentSpell[idPve] = selectedPve
 			end
 		end
+		--[[ 		for Row = 1, 6 do
+			local _, namePvp, _, selectedPvp, _, idpvp = GetPvpTalentInfo(Row, Column, ActiveSpecGroup)
+			if namePvp then
+				TalentSpell[namePvp] = selectedPvp
+				TalentSpell[idpvp] = selectedPvp
+			end
+		end ]]
 	end
 end
 local function UpdateSpells()
@@ -425,7 +428,7 @@ function msGSI(spell)
 		end
 	end
 	if not spelltype then
-		local Spell_name, _, _, _, _, _, Spell_Id = GetSpellInfo(spell)
+		local Spell_name, _, _, _, _, Spell_Id = GetSpellInfo(spell)
 		if Spell_name then
 			isspell = true
 			spelltype = "SPELL"
@@ -630,7 +633,7 @@ local function GROUP_UPDATE()
 	local gourptype
 	local InRaid = IsInRaid()
 	local InParty = UnitInParty("player")
-	if InRaid and InParty then		
+	if InRaid and InParty then
 		grouptype = "raid"
 	end
 	if InRaid == false and InParty then
@@ -2817,7 +2820,8 @@ end
 ObjectField(Object, 0x1E0, Types.Short) == 1
 ObjectDescriptor(Object, 0x40, Types.UInt) == 668
 
-]] function msFISH()
+]]
+function msFISH()
 	if IsFishingLoot() then
 		for i = 1, GetNumLootItems() do
 			ConfirmLootSlot(i)
@@ -2827,22 +2831,16 @@ ObjectDescriptor(Object, 0x40, Types.UInt) == 668
 	elseif not IsFishingLoot() and msINT("msFISH准备放鱼钩", 0.5) then
 		local name = GetSpellInfo(131474)
 		if UnitChannelInfo("player") == name then
-			if GetObjectCount then
-				local playerULong = ObjectDescriptor("player", 0, Types.ULong)
-				for i = 1, GetObjectCount() do
-					local Object = GetObjectWithIndex(i)
-					if
-						ObjectDescriptor(Object, 0x30, Types.ULong) == playerULong and ObjectField(Object, 0x1C4, Types.Byte) == 1 and
-							ObjectName(Object) == "鱼漂"
-					 then
-						InteractUnit(Object)
-						return
-					end
+			--local playerULong = ObjectDescriptor("player", 0, Types.ULong)
+			for i = 1, GetObjectCount() do
+				local Object = GetObjectWithIndex(i)
+				--if ObjectDescriptor(Object, 0x30, Types.ULong) == playerULong and ObjectField(Object, 0x14C, Types.Byte) == 1 and ObjectName(Object) == "鱼漂" then
+				if ObjectField(Object, 0x14C, Types.Byte) == 1 and ObjectName(Object) == "鱼漂" then
+					InteractUnit(Object)
+					return
 				end
 			end
-		elseif
-			not UnitChannelInfo("player") and not UnitAffectingCombat("player") and GetUnitSpeed("player") == 0 and msISC(name)
-		 then
+		elseif not UnitChannelInfo("player") and not UnitAffectingCombat("player") and GetUnitSpeed("player") == 0 then
 			CastSpellByName(name)
 		end
 	end
