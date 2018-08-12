@@ -157,8 +157,12 @@ local spellsByName_pet = {}
 local spellsByID_pet = {}
 local TalentSpell = {}
 local function UpdateBook(bookType)
-	local _, _, offs, numspells = GetSpellTabInfo(2)
-	local maxnum = numspells
+	local _, _, offs, numspells = GetSpellTabInfo(3)
+	local max = offs
+	if numspells == 0 then
+		local _, _, offs, numspells = GetSpellTabInfo(2)
+		max = offs + numspells
+	end
 	local spellsByName, spellsByID = {}, {}
 	if bookType == "spell" then
 		spellsByName = spellsByName_spell
@@ -169,7 +173,7 @@ local function UpdateBook(bookType)
 	end
 	wipe(spellsByName)
 	wipe(spellsByID)
-	for spellBookID = 1, maxnum do
+	for spellBookID = 1, max do
 		local type, baseSpellID = GetSpellBookItemInfo(spellBookID, bookType)
 		if type == "SPELL" then
 			local currentSpellName = GetSpellBookItemName(spellBookID, bookType)
