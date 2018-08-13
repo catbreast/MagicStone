@@ -2378,7 +2378,7 @@ CastSpellFrame:SetScript(
 		if event == "COMBAT_LOG_EVENT_UNFILTERED" then
 			Eventarg = {CombatLogGetCurrentEventInfo()}
 			if Eventarg[2] == "SPELL_CAST_SUCCESS" and Eventarg[4] == UnitGUID("player") then
-				if (not IsPassiveSpell(Eventarg[12])) then
+				if (not IsPassiveSpell(Eventarg[13])) then
 					Last_Spell = Eventarg[13]
 				end
 				if tContains({"猛虎掌", "幻灭踢", "旭日东升踢", "怒雷破", "风领主之击", "升龙霸", "神鹤引项踢", "真气波", "碎玉闪电", "轮回之触", "翔龙在天"}, Eventarg[13]) then
@@ -2387,26 +2387,29 @@ CastSpellFrame:SetScript(
 				end
 			end
 		end
-		if event == "UNIT_SPELLCAST_SENT" and Eventarg[1] == "player" and Eventarg[2] then
-			local name, _, _, castTime = GetSpellInfo(Eventarg[2])
+		if event == "UNIT_SPELLCAST_SENT" and Eventarg[1] == "player" and Eventarg[4] then
+			local name, _, _, castTime = GetSpellInfo(Eventarg[4])
 			if name and castTime == 0 and not IsPassiveSpell(name) then
 				Last_Spell = name
 			end
 		end
 		if event == "UNIT_SPELLCAST_SENT" and Eventarg[1] == "player" and Eventarg[2] and Eventarg[4] then
-			local name, _, _, castTime = GetSpellInfo(Eventarg[2])
+			local name, _, _, castTime = GetSpellInfo(Eventarg[4])
 			if name and castTime > 0 then
-				Spell_Spell = Eventarg[2]
-				Spell_Target = Eventarg[4] ~= "" and Eventarg[4] or "player"
+				Spell_Spell = Eventarg[4]
+				Spell_Target = Eventarg[2] ~= "" and Eventarg[2] or "player"
 			end
 		end
-		if event == "COMBAT_LOG_EVENT_UNFILTERED" and Eventarg[2] == "SPELL_CAST_SUCCESS" and Eventarg[4] and Eventarg[13] then
-			GetSpellCast[Eventarg[4]] = GetSpellCast[Eventarg[4]] or {}
-			GetSpellCast[Eventarg[4]][Eventarg[13]] = GetSpellCast[Eventarg[4]][Eventarg[13]] or {}
-			GetSpellCast[Eventarg[4]][Eventarg[13]]["time"] = GetTime()
-			GetSpellCast[Eventarg[4]][Eventarg[13]]["destGUID"] = Eventarg[8]
-			GetSpellCast[Eventarg[4]][Eventarg[13]]["destName"] = Eventarg[9]
-		--print(Eventarg[8]=="",Eventarg[8])
+		if event == "COMBAT_LOG_EVENT_UNFILTERED" then
+			Eventarg = {CombatLogGetCurrentEventInfo()}
+			if Eventarg[2] == "SPELL_CAST_SUCCESS" and Eventarg[4] and Eventarg[13] then
+				GetSpellCast[Eventarg[4]] = GetSpellCast[Eventarg[4]] or {}
+				GetSpellCast[Eventarg[4]][Eventarg[13]] = GetSpellCast[Eventarg[4]][Eventarg[13]] or {}
+				GetSpellCast[Eventarg[4]][Eventarg[13]]["time"] = GetTime()
+				GetSpellCast[Eventarg[4]][Eventarg[13]]["destGUID"] = Eventarg[8]
+				GetSpellCast[Eventarg[4]][Eventarg[13]]["destName"] = Eventarg[9]
+			--print(Eventarg[8]=="",Eventarg[8])
+			end
 		end
 		if event == "LOADING_SCREEN_ENABLED" then
 			--print("LOADING_SCREEN_ENABLED")

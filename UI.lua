@@ -863,19 +863,20 @@ ScenarioButton:SetScript(
 		end
 		local Eventarg = {...}
 		if (event == "UNIT_SPELLCAST_SENT") and Eventarg[1] == "player" then
-			Spell_Target = Eventarg[4] ~= "" and Eventarg[4] or GetUnitName("player")
-			local name, _, icon, castTime = GetSpellInfo(Eventarg[2])
+			Spell_Target = Eventarg[2] ~= "" and Eventarg[2] or GetUnitName("player")
+			local name, _, icon, castTime = GetSpellInfo(Eventarg[4])
 			if name and icon then
 				self:SetNormalTexture(icon)
 				SpellTargettext:SetText(format("%s\n%s", name, Spell_Target))
 			end
-		elseif
-			event == "COMBAT_LOG_EVENT_UNFILTERED" and Eventarg[2] == "SPELL_CAST_SUCCESS" and Eventarg[4] == UnitGUID("player")
-		 then
-			local SchoolColor = School[Eventarg[14]] or "|CFFFFFFFF"
-			Spell_Target = Eventarg[9] or Spell_Target or GetUnitName("player")
-			self:SetNormalTexture(select(3, GetSpellInfo(Eventarg[12])) or select(10, GetItemInfo(Eventarg[12])))
-			SpellTargettext:SetText(format("%s%s%s\n%s\n", SchoolColor, Eventarg[13], "|r", Spell_Target))
+		elseif event == "COMBAT_LOG_EVENT_UNFILTERED" then
+			Eventarg = {CombatLogGetCurrentEventInfo()}
+			if Eventarg[2] == "SPELL_CAST_SUCCESS" and Eventarg[4] == UnitGUID("player") then
+				local SchoolColor = School[Eventarg[14]] or "|CFFFFFFFF"
+				Spell_Target = Eventarg[9] or Spell_Target or GetUnitName("player")
+				self:SetNormalTexture(select(3, GetSpellInfo(Eventarg[13])) or select(10, GetItemInfo(Eventarg[13])))
+				SpellTargettext:SetText(format("%s%s%s\n%s\n", SchoolColor, Eventarg[13], "|r", Spell_Target))
+			end
 		end
 	end
 )
