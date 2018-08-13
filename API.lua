@@ -108,7 +108,7 @@ local GetNumSpellTabs = GetNumSpellTabs
 local GetSpellBookItemInfo = GetSpellBookItemInfo
 local GetSpellBookItemName = GetSpellBookItemName
 local UnitExists = UnitExists
-local GetPvpTalentInfo = GetPvpTalentInfo
+
 --lib
 --local GRange = LibStub("LibRangeCheck-2.0");
 local RunMacroText = RunMacroText
@@ -157,12 +157,7 @@ local spellsByName_pet = {}
 local spellsByID_pet = {}
 local TalentSpell = {}
 local function UpdateBook(bookType)
-	local _, _, offs, numspells = GetSpellTabInfo(3)
-	local max = offs
-	if numspells == 0 then
-		local _, _, offs, numspells = GetSpellTabInfo(2)
-		max = offs + numspells
-	end
+	local _, _, offset, numSpells = GetSpellTabInfo(2)
 	local spellsByName, spellsByID = {}, {}
 	if bookType == "spell" then
 		spellsByName = spellsByName_spell
@@ -173,7 +168,7 @@ local function UpdateBook(bookType)
 	end
 	wipe(spellsByName)
 	wipe(spellsByID)
-	for spellBookID = 1, max do
+	for spellBookID = offset + 1, numSpells + offset do
 		local type, baseSpellID = GetSpellBookItemInfo(spellBookID, bookType)
 		if type == "SPELL" then
 			local currentSpellName = GetSpellBookItemName(spellBookID, bookType)
@@ -204,13 +199,25 @@ local function UpdateBook(bookType)
 				TalentSpell[idPve] = selectedPve
 			end
 		end
-	--[[ 	for Row = 1, 6 do
+		--[[ 	for Row = 1, 6 do
 			local _, namePvp, _, selectedPvp, _, idpvp = GetPvpTalentInfo(Row, Column, ActiveSpecGroup)
 			if namePvp then
 				TalentSpell[namePvp] = selectedPvp
 				TalentSpell[idpvp] = selectedPvp
 			end
 		end ]]
+		for Row = 1, 4 do
+			local slotInfo = C_SpecializationInfo.GetPvpTalentSlotInfo(Row)
+			local talentID1 = slotInfo.selectedTalentID
+			if talentID1 then
+				local talentID, name, texture, selected, available, spellID, unknown, row, column =
+					GetPvpTalentInfoByID(talentID1, GetSpecializationInfo(GetSpecialization()))
+				if name then
+					TalentSpell[name] = available
+					TalentSpell[spellID] = available
+				end
+			end
+		end
 	end
 end
 local function UpdateSpells()
