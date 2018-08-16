@@ -643,6 +643,7 @@ local function GROUP_UPDATE()
 	wipe(GuidTable)
 	--local group = IsInRaid() and "raid" or "party"
 	local gourptype
+	local Members = GetNumGroupMembers()
 	local InRaid = IsInRaid()
 	local InParty = UnitInParty("player")
 	if InRaid and InParty then
@@ -652,17 +653,20 @@ local function GROUP_UPDATE()
 		grouptype = "party"
 	end
 	--local Members = IsInRaid() and GetNumGroupMembers() or (GetNumSubgroupMembers() + 1)
-	local Members = GetNumGroupMembers()
 	if Members > 0 then
 		for i = 1, Members do
-			--if ObjectRawType(thisUnit, player)
-			--[[	if i == Members and group == "party" then
+			local Unit
+			if i == Members and grouptype == "party" then
+				Unit = "player"
+			else
+				--[[	if i == Members and group == "party" then
 				Unit = "player"
 			else
 				Unit = group .. i
 			end
 			--print(UnitName(Unit))]]
-			local Unit = grouptype .. i
+				Unit = grouptype .. i
+			end
 			tinsert(GuidTable, Unit)
 		end
 	end
