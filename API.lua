@@ -207,7 +207,8 @@ local function UpdateBook(bookType)
 			end
 		end ]]
 		for Row = 1, 4 do
-			local slotInfo = C_SpecializationInfo.GetPvpTalentSlotInfo(Row)
+			local a ={}
+			local slotInfo = C_SpecializationInfo.GetPvpTalentSlotInfo(Row)  or a
 			local talentID1 = slotInfo.selectedTalentID
 			if talentID1 then
 				local talentID, name, texture, selected, available, spellID, unknown, row, column =
