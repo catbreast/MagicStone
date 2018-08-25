@@ -2363,7 +2363,7 @@ end
 function LoadedAutoAway()
 	local NoAutoAway = MagicStonehelper.NoAutoAway
 	if IsHackEnabled("NoAutoAway") ~= NoAutoAway then
-		SetHackEnabled("NoAutoAway", NoAutoAway)
+		RunMacroText(".antiafk")
 	end
 end
 

@@ -556,7 +556,8 @@ function DeleteScriptButton(arg1)
 end
 --- 防暂离
 if MagicStonehelper.NoAutoAway then
-	SetHackEnabled("NoAutoAway", true)
+	-- SetHackEnabled("NoAutoAway", true)
+	RunMacroText(".antiafk")
 end
 function ScriptMobileButton(arg1, arg2)
 	if arg2 == "up" and arg1 > 1 then
