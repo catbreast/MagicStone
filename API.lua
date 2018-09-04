@@ -656,6 +656,7 @@ local function GROUP_UPDATE()
 	--local Members = IsInRaid() and GetNumGroupMembers() or (GetNumSubgroupMembers() + 1)
 	if Members == 0 then
 		Members = 1
+		grouptype = "party"
 	end
 	if Members > 0 then
 		for i = 1, Members do
@@ -2957,17 +2958,29 @@ msIIIt = {
 	122578, -- Kin'garoth (Antorus the Burning Throne - Confirmed in game)
 	125050 -- Kin'garoth (Antorus the Burning Throne)
 }
-function msIII(Unit1, Unit2)
-	if Unit2 == nil then
+function msIII(unit1, unit2)
+	--[[ if Unit2 == nil then
 		if Unit1 == "player" then
 			Unit2 = "target"
 		else
 			Unit2 = "player"
 		end
+	end ]]
+	if type(unit1) ~= "table" and type(unit1) ~= "string" then
+		unit1 = "target"
+	end
+	if type(unit2) ~= "table" and type(unit2) ~= "string" then
+		unit2 = "player"
+	end
+	if type(unit1) ~= "table" and (not UnitIsVisible(unit1) or not UnitInPhase(unit1)) then
+		return false, "目标或坐标无效:", unit1
+	end
+	if type(unit2) ~= "table" and (not UnitIsVisible(unit2) or not UnitInPhase(unit2)) then
+		return false, "目标或坐标无效:", unit2
 	end
 	local djh = msIIIt
 	for i = 1, #djh do
-		if ObjectID(Unit1) == djh[i] or ObjectID(Unit2) == djh[i] then
+		if ObjectID(unit1) == djh[i] or ObjectID(unit2) == djh[i] then
 			return true
 		end
 	end
