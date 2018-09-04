@@ -207,8 +207,8 @@ local function UpdateBook(bookType)
 			end
 		end ]]
 		for Row = 1, 4 do
-			local a ={}
-			local slotInfo = C_SpecializationInfo.GetPvpTalentSlotInfo(Row)  or a
+			local a = {}
+			local slotInfo = C_SpecializationInfo.GetPvpTalentSlotInfo(Row) or a
 			local talentID1 = slotInfo.selectedTalentID
 			if talentID1 then
 				local talentID, name, texture, selected, available, spellID, unknown, row, column =
@@ -654,6 +654,9 @@ local function GROUP_UPDATE()
 		grouptype = "party"
 	end
 	--local Members = IsInRaid() and GetNumGroupMembers() or (GetNumSubgroupMembers() + 1)
+	if Members == 0 then
+		Members = 1
+	end
 	if Members > 0 then
 		for i = 1, Members do
 			local Unit
@@ -2157,13 +2160,15 @@ function msIPC(number)
 	local eventIndex = eventIndex()
 	if eventIndex > 0 then
 		local Eventarg = {GetEventInfo(eventIndex)}
-		if Eventarg[1] == number or Eventarg[9] == number then
-			return true
+		local ptime = GetTime() - Eventarg[5]
+		if (Eventarg[1] == number or Eventarg[3] == number or Eventarg[9] == number) and ptime > 0.3 then
+			return true, ptime, Eventarg[6]
 		end
 	else
-		return false
+		return false, 0, 0
 	end
 end
+
 ---------------------------------------------------------------------------------
 
 --自动打断敌对读条
