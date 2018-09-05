@@ -643,7 +643,7 @@ local function GROUP_UPDATE()
 	--print(GetNumGroupMembers(),GetNumSubgroupMembers(),"刷新队伍列表")
 	wipe(GuidTable)
 	--local group = IsInRaid() and "raid" or "party"
-	local gourptype
+	local grouptype
 	local Members = GetNumGroupMembers()
 	local InRaid = IsInRaid()
 	local InParty = UnitInParty("player")
