@@ -597,13 +597,12 @@ function msGetUnits(isFriend, objType, distance, Central)
 			return UnitCanAssist(unit1, unit2) or UnitCanAttack(unit1, unit2)
 		end
 	end
+	local InObjectTypes = ObjectIsUnit
 	local ExObjectTypes = UnitIsDeadOrGhost
-	local InObjectTypes = ObjectType.Unit
 	if objType == true then
-		InObjectTypes = ObjectType.Player
+		InObjectTypes = ObjectIsPlayer
 	elseif objType == false then
-		ExObjectTypes = ObjectRawType
-		NOTPlayer = ObjectType.Player
+		ExObjectTypes = ObjectIsPlayer
 	end
 	if type(distance) ~= "number" then
 		distance = nil
@@ -617,14 +616,8 @@ function msGetUnits(isFriend, objType, distance, Central)
 	end
 	for i = 1, GetObjectCount() do
 		local thisUnit = GetObjectWithIndex(i)
-		if ObjectRawType(thisUnit, InObjectTypes) and not ExObjectTypes(thisUnit, NOTPlayer) then
-			local a =
-				UnitCreatureType(thisUnit) ~= "野生宠物" and UnitCreatureType(thisUnit) ~= "未指定" and
-				UnitCreatureType(thisUnit) ~= "非战斗宠物"
-			if
-				UnitIsVisible(thisUnit) and UnitInPhase(thisUnit) and not UnitIsDeadOrGhost(thisUnit) and a and
-					isFriend(thisUnit, Central)
-			 then
+		if InObjectTypes(thisUnit) and not ExObjectTypes(thisUnit) then
+			if not UnitIsDeadOrGhost(thisUnit) and UnitInPhase(thisUnit) and isFriend(thisUnit, Central) then
 				if not distance then
 					tinsert(GetUnitsTable, thisUnit)
 				elseif distance and msGD(thisUnit, Central) < distance then
@@ -2161,7 +2154,15 @@ function msIPC(number)
 	local eventIndex = eventIndex()
 	if eventIndex > 0 then
 		local Eventarg = {GetEventInfo(eventIndex)}
-		local ptime = GetTime() - Eventarg[5]
+		local ptime
+		if type(Eventarg[5]) == "number" then
+			ptime = GetTime() - Eventarg[5]
+		else
+			ptime = Eventarg[7]
+		end
+		if type(ptime) ~= "number" then
+			ptime = 0
+		end
 		if (Eventarg[1] == number or Eventarg[3] == number or Eventarg[9] == number) and ptime > 0.3 then
 			return true, ptime, Eventarg[6]
 		end
@@ -3030,5 +3031,71 @@ function msOvaleIcon(icon) -----
 			end
 			-- DEFAULT_CHAT_FRAME:AddMessage(name1..": "..spellId1);
 		end
+	end
+end
+function j7()
+	local zy, qz, kc
+	if msGUB("81744") or (not msGUB("81744") and UnitFactionGroup("unit") == "Horde") then
+		zy = bl
+	end
+	if msGUB("81745") or (not msGUB("81745") and UnitFactionGroup("unit") == "Alliance") then
+		zy = lm
+	end
+	if zy == bl then
+		qz = "部落旗帜"
+		kc = "部落矿车"
+	end
+	if zy == lm then
+		qz = "联盟旗帜"
+		kc = "联盟矿车"
+	end
+	return qz, kc
+end
+
+--寻找最密集的目标(技能距离默认40码，技能影响范围默认10码),返回值1为技能目标，返回值2为技能影响数量
+----------------------------------------------------------------------------------
+function msGOD(isFriend, skill_distance, affect_range, FilterFunc)
+	local guidtable = {}
+	if (not skill_distance or type(skill_distance) ~= "number") then
+		skill_distance = 43
+	end
+	if (not affect_range or type(affect_range) ~= "number") then
+		affect_range = 10
+	end
+	if type(FilterFunc) ~= "function" then
+		error(FilterFunc .. ":参数FilterFunc错误。")
+		return false
+	end
+	if isFriend == true then
+		_, guidtable = msFindUnit(nil, FilterFunc)
+	elseif isFriend == false then
+		_, guidtable = msFindUnit(msGetUnits(false, nil, skill_distance + affect_range), FilterFunc)
+	end
+	if (not guidtable or #guidtable == 0) then
+		return false, "目标不存在。"
+	end
+	local Node = 0
+	local Gathering = {}
+	for _, Target in ipairs(guidtable) do
+		--guidtable取的范围大，不在技能范围内的和不在视野内的直接进入下一个for循环
+		if not (UnitInPhase(Target) and msIII(Target)) or msGD(Target) > skill_distance then
+			break
+		end
+		local Neighbors = 0
+		for _, Neighbor in ipairs(guidtable) do
+			if msGD(Target, Neighbor) <= affect_range then
+				Neighbors = Neighbors + 1
+			end
+		end
+		if Neighbors > Node and Neighbors >= 1 then
+			tinsert(Gathering, Target)
+			Node = Neighbors
+		end
+	end
+	if #Gathering > 0 then
+		--多返回一个值是技能影响数量，
+		return Gathering[#Gathering], Node
+	else
+		return false, "目标不存在。"
 	end
 end
