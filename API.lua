@@ -3099,3 +3099,4 @@ function msGOD(isFriend, skill_distance, affect_range, FilterFunc)
 		return false, "目标不存在。"
 	end
 end
+--无聊再试试
